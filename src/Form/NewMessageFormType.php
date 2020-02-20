@@ -41,7 +41,7 @@ class NewMessageFormType extends AbstractType {
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Send message',
-                'attr' => [ 'class' => 'btn-secondary' ]
+                'attr' => [ 'class' => 'btn btn-secondary' ]
             ]);
     }
 

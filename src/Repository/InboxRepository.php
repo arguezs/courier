@@ -13,8 +13,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method Inbox[]    findAll()
  * @method Inbox[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class InboxRepository extends ServiceEntityRepository
-{
+class InboxRepository extends ServiceEntityRepository {
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Inbox::class);
     }
