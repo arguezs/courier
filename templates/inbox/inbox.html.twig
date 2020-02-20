@@ -11,10 +11,10 @@
     </ul>#}
 
     <table class="table table-hover table-sm">
-        {% if app.user.receivedMsg.count == 0 %}
+        {% if messages.count == 0 %}
             Empty inbox
         {% else %}
-            {% for message in app.user.receivedMsg %}
+            {% for message in messages %}
                 {{ include('_message_row.html.twig', {message: message}) }}
             {% endfor %}
         {% endif %}

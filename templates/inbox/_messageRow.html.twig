@@ -1,0 +1,17 @@
+<tr id="{{ message.id }}" class="message-row row position-relative text-justify">
+    <td class="col-sm col-lg-2 px-3 text-truncate">
+        {% if app.user.friends.contains(message.sender) %}
+            {{ message.sender.usrName }}
+        {% elseif message.sender == app.user %}
+            Me
+        {% else %}
+            {{ message.sender.usrMail }}
+        {% endif %}
+    </td>
+    <td class="col-sm col-lg-9 px-3 text-truncate position-static">
+        <a href="{{ path('message', {msgId: message.id}) }}" class="text-reset text-decoration-none stretched-link">
+            {{ message.about }}
+        </a>
+    </td>
+    <td class="col-sm col-lg-1 text-right px-3">{{ message.sentWhen }}</td>
+</tr>
