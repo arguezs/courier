@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,7 +20,13 @@ class Inbox
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="inboxes")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $owner;
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Message")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $message;
 
     /**
      * @ORM\Column(type="boolean")
@@ -30,28 +34,35 @@ class Inbox
     private $in_out;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Message")
+     * @ORM\Column(type="boolean")
      */
-    private $messages;
-
-    public function __construct()
-    {
-        $this->messages = new ArrayCollection();
-    }
+    private $is_read;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getOwner(): ?User
+    public function getUser(): ?User
     {
-        return $this->owner;
+        return $this->user;
     }
 
-    public function setOwner(?User $owner): self
+    public function setUser(?User $user): self
     {
-        $this->owner = $owner;
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getMessage(): ?Message
+    {
+        return $this->message;
+    }
+
+    public function setMessage(?Message $message): self
+    {
+        $this->message = $message;
 
         return $this;
     }
@@ -68,28 +79,14 @@ class Inbox
         return $this;
     }
 
-    /**
-     * @return Collection|Message[]
-     */
-    public function getMessages(): Collection
+    public function getIsRead(): ?bool
     {
-        return $this->messages;
+        return $this->is_read;
     }
 
-    public function addMessage(Message $message): self
+    public function setIsRead(bool $is_read): self
     {
-        if (!$this->messages->contains($message)) {
-            $this->messages[] = $message;
-        }
-
-        return $this;
-    }
-
-    public function removeMessage(Message $message): self
-    {
-        if ($this->messages->contains($message)) {
-            $this->messages->removeElement($message);
-        }
+        $this->is_read = $is_read;
 
         return $this;
     }

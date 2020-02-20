@@ -59,11 +59,6 @@ class User implements UserInterface
     private $groups;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Inbox", mappedBy="owner", orphanRemoval=true)
-     */
-    private $inboxes;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Friendship", mappedBy="sender", orphanRemoval=true)
      */
     private $friendships;
@@ -77,6 +72,11 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Inbox", mappedBy="user", orphanRemoval=true)
+     */
+    private $inboxes;
 
     public function __construct()
     {
