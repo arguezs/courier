@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#<ul class="nav nav-tabs border-0">
+        <li class="nav-item" id="received-msg">
+            <a href="{{ path('inbox') }}" class="nav-link text-secondary {% if not sent  %} active {% endif %}">Received</a>
+        </li>
+        <li class="nav-item" id="sent-msg">
+            <a href="{{ path('outbox') }}" class="nav-link text-secondary {% if sent  %} active {% endif %}">Sent</a>
+        </li>
+    </ul>#}
+
+    <table class="table table-hover table-sm">
+        {% if app.user.receivedMsg.count == 0 %}
+            Empty inbox
+        {% else %}
+            {% for message in app.user.receivedMsg %}
+                {{ include('_message_row.html.twig', {message: message}) }}
+            {% endfor %}
+        {% endif %}
+    </table>
+{% endblock %}
