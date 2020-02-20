@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Inbox;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -19,12 +20,14 @@ class InboxRepository extends ServiceEntityRepository
     }
 
     public function findReceivedMessages(User $user){
-        return $this->createQueryBuilder('received')
-            ->select('received.message')
+        $qb = $this->createQueryBuilder('received')
+            //->select('received.message')
             ->where('received.user = :user')
             ->setParameter('user', $user)
             ->andWhere('received.in_out = :sent')
             ->setParameter('sent', false);
+
+        return $qb->getQuery()->execute();
     }
 
     public function findSentMessages(User $user){

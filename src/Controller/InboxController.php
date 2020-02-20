@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Inbox;
+use App\Form\NewMessageFormType;
 use App\Repository\InboxRepository;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,11 +21,20 @@ class InboxController extends AbstractController {
         if (!$this->getUser())
             return $this->redirectToRoute('home');
 
-        $repository = new InboxRepository();
+        $repository = $this
+            ->getDoctrine()
+            ->getRepository(Inbox::class);
 
         return $this->render('inbox/inbox.html.twig', [
-            'messages' => $repository->findReceivedMessages($this->getUser())
+            'messages' => $repository->findReceivedMessages($this->getUser()),
+            'newMessageForm' => $this->newMessageForm()->createView()
         ]);
+    }
+
+    public function newMessageForm(){
+        $form = $this->createForm(NewMessageFormType::class);
+
+        return $form;
     }
 
 }
