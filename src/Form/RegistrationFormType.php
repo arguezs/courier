@@ -24,7 +24,6 @@ class RegistrationFormType extends AbstractType
                     'placeholder' => 'Name',
                     'class' => 'form-control my-3'
                 ],
-                'mapped' => false,
                 'required' => true,
             ])
             ->add('email', EmailType::class, [

@@ -14,9 +14,26 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class InboxRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Inbox::class);
+    }
+
+    public function findReceivedMessages(User $user){
+        return $this->createQueryBuilder('received')
+            ->select('received.message')
+            ->where('received.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('received.in_out = :sent')
+            ->setParameter('sent', false);
+    }
+
+    public function findSentMessages(User $user){
+        return $this->createQueryBuilder('sent')
+            ->select('sent.message')
+            ->where('sent.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('sent.in_out = :sent')
+            ->setParameter('sent', true);
     }
 
     // /**

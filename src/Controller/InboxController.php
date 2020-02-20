@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\InboxRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,11 @@ class InboxController extends AbstractController {
         if (!$this->getUser())
             return $this->redirectToRoute('home');
 
-        return $this->render('inbox/inbox.html.twig');
+        $repository = new InboxRepository();
+
+        return $this->render('inbox/inbox.html.twig', [
+            'messages' => $repository->findReceivedMessages($this->getUser())
+        ]);
     }
 
 }

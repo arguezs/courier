@@ -78,8 +78,7 @@ class User implements UserInterface
      */
     private $inboxes;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->sentMsg = new ArrayCollection();
         $this->receivedMsg = new ArrayCollection();
         $this->groups = new ArrayCollection();
