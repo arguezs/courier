@@ -27,6 +27,24 @@ class InboxController extends AbstractController {
 
         return $this->render('inbox/inbox.html.twig', [
             'messages' => $repository->findReceivedMessages($this->getUser()),
+            'sent' => false,
+            'newMessageForm' => $this->newMessageForm()->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/inbox/sent", name="outbox")
+     * @return RedirectResponse|Response
+     */
+    public function outbox(){
+        if (!$this->getUser())
+            return $this->redirectToRoute('home');
+
+        $repository = $this->getDoctrine()->getRepository(Inbox::class);
+
+        return $this->render('inbox/inbox.html.twig', [
+            'messages' => $repository->findSentMessages($this->getUser()),
+            'sent' => true,
             'newMessageForm' => $this->newMessageForm()->createView()
         ]);
     }
