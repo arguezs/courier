@@ -2,6 +2,7 @@
 
 ##### Table of Contents  
 - [Description](#description)
+- [Completed features](#completed-features)
 
 ## Description
 A webmail application developed in Symfony. The visual part is managed with Bootstrap.
