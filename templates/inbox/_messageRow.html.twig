@@ -7,7 +7,7 @@
         {% if message.sender == app.user %}
             Me
         {% else %}
-            {{ message.sender.usrMail }}
+            {{ message.sender.username }}
         {% endif %}
     </td>
     <td class="col-sm col-lg-9 px-3 text-truncate position-static">

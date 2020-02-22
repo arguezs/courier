@@ -21,15 +21,15 @@ class InboxRepository extends ServiceEntityRepository {
     public function findReceivedMessages(User $user){
         return $this->findBy([
             'user' => $user,
-            'in_out' => true
-        ]);
+            'in_out' => false
+        ], [ 'message' => 'DESC' ]);
     }
 
     public function findSentMessages(User $user){
         return $this->findBy([
             'user' => $user,
-            'in_out' => false
-        ]);
+            'in_out' => true
+        ], [ 'message' => 'DESC' ]);
     }
 
     // /**
