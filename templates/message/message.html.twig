@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ message.about }} - {% endblock %}
+
+{% block body %}
+    <div class="w-75 mx-auto my-3 position-relative text-justify">
+        <h5 id="back-button" class="mt-3"><i class="fas fa-arrow-left"></i></h5>
+        <h3 id="msg-about">{{ message.about }}</h3>
+        <button type="button" class="btn btn-outline-danger float-right" id="dlt-msg-btn">Delete</button>
+        <input type="hidden" value="{{ message.id }}" id="msg-id">
+        <input type="hidden" value="" id="msg-sent">
+
+        <p class="text-secondary mb-0">From: {{ message.sender.username }}</p>
+        <p class="text-secondary mt-0">
+            for
+            {% if message.sender == app.user %}
+                {% for to in message.receiver %}
+                    {{ to.username }},
+                {% endfor %}
+            {% else %}
+                me
+            {% endif %}
+        </p>
+
+        <p class="text-muted">({{ message.sentAgo }} ago)</p>
+
+        {{ message.body }}
+    </div>
+{% endblock %}
