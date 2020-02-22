@@ -22,14 +22,25 @@ class MessageController extends AbstractController {
         $messageRepo = $this->getDoctrine()->getRepository(Message::class);
         $message = $messageRepo->find($id);
 
+        if (!$message)
+            return $this->redirectToRoute('error', [ 'errorCode' => 404 ]);
+
         $inboxRepo = $this->getDoctrine()->getRepository(Inbox::class);
-        $inbox = $inboxRepo->findOneBy([
+        $inbox = $inboxRepo->findBy([
             'user' => $this->getUser(),
             'message' => $message
         ]);
 
         if (!$inbox)
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('error', [ 'errorCode' => 401 ]);
+
+        foreach ($inbox as $row){
+            if (!$row->getIsRead()) {
+                $row->setIsRead(true);
+                $this->getDoctrine()->getManager()->persist($row);
+                $this->getDoctrine()->getManager()->flush();
+            }
+        }
 
         return $this->render('message/message.html.twig', [
             'message' => $message

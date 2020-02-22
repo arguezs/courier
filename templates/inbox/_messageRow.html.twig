@@ -1,6 +1,6 @@
 <tr
         id="{{ message.id }}"
-        class="message-row row position-relative text-justify {{ row.isRead ? 'font-weight-bold' : '' }}">
+        class="message-row row position-relative text-justify {{ row.isRead ? '' : 'font-weight-bold' }}">
     <td class="col-sm col-lg-2 px-3 text-truncate">
         {#{% if app.user.friends.contains(message.sender) %}
             {{ message.sender.usrName }}#}
