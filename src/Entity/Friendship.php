@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FriendshipRepository")
  */
-class Friendship
-{
+class Friendship {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -33,42 +32,35 @@ class Friendship
      */
     private $pending;
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getSender(): ?User
-    {
+    public function getSender(): ?User {
         return $this->sender;
     }
 
-    public function setSender(?User $sender): self
-    {
+    public function setSender(?User $sender): self {
         $this->sender = $sender;
 
         return $this;
     }
 
-    public function getReceiver(): ?User
-    {
+    public function getReceiver(): ?User {
         return $this->receiver;
     }
 
-    public function setReceiver(?User $receiver): self
-    {
+    public function setReceiver(?User $receiver): self {
         $this->receiver = $receiver;
 
         return $this;
     }
 
-    public function getPending(): ?bool
-    {
+    public function isPending(): ?bool {
         return $this->pending;
     }
 
-    public function setPending(bool $pending): self
-    {
+    public function setPending(bool $pending): self {
         $this->pending = $pending;
 
         return $this;

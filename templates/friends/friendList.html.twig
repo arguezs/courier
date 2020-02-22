@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Friends - {% endblock %}
+
+{% block body %}
+    <h3 class="p-3">Friends</h3>
+    <table class="table table-sm table-hover">
+        {% if friends.count != 0 %}
+            {% for friend in friends %}
+                {{ include('friends/_friendRow.html.twig', {friend: friend}) }}
+            {% endfor %}
+        {% else %}
+            You don't have any friends yet
+        {% endif %}
+    </table>
+{% endblock %}

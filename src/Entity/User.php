@@ -7,14 +7,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class User implements UserInterface
-{
+class User implements UserInterface {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -87,18 +86,15 @@ class User implements UserInterface
         $this->receivedFriendships = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getEmail(): ?string
-    {
+    public function getEmail(): ?string {
         return $this->email;
     }
 
-    public function setEmail(string $email): self
-    {
+    public function setEmail(string $email): self {
         $this->email = $email;
 
         return $this;
@@ -109,16 +105,14 @@ class User implements UserInterface
      *
      * @see UserInterface
      */
-    public function getUsername(): string
-    {
+    public function getUsername(): string {
         return (string) $this->email;
     }
 
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
-    {
+    public function getRoles(): array {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
@@ -126,8 +120,7 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
-    {
+    public function setRoles(array $roles): self {
         $this->roles = $roles;
 
         return $this;
@@ -136,13 +129,11 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getPassword(): string
-    {
+    public function getPassword(): string {
         return (string) $this->password;
     }
 
-    public function setPassword(string $password): self
-    {
+    public function setPassword(string $password): self {
         $this->password = $password;
 
         return $this;
@@ -151,16 +142,14 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getSalt()
-    {
+    public function getSalt() {
         // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
-    {
+    public function eraseCredentials() {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
@@ -168,13 +157,11 @@ class User implements UserInterface
     /**
      * @return Collection|Message[]
      */
-    public function getSentMsg(): Collection
-    {
+    public function getSentMsg(): Collection {
         return $this->sentMsg;
     }
 
-    public function addSentMsg(Message $sentMsg): self
-    {
+    public function addSentMsg(Message $sentMsg): self {
         if (!$this->sentMsg->contains($sentMsg)) {
             $this->sentMsg[] = $sentMsg;
             $sentMsg->setSender($this);
@@ -183,8 +170,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeSentMsg(Message $sentMsg): self
-    {
+    public function removeSentMsg(Message $sentMsg): self {
         if ($this->sentMsg->contains($sentMsg)) {
             $this->sentMsg->removeElement($sentMsg);
             // set the owning side to null (unless already changed)
@@ -199,13 +185,11 @@ class User implements UserInterface
     /**
      * @return Collection|Message[]
      */
-    public function getReceivedMsg(): Collection
-    {
+    public function getReceivedMsg(): Collection {
         return $this->receivedMsg;
     }
 
-    public function addReceivedMsg(Message $receivedMsg): self
-    {
+    public function addReceivedMsg(Message $receivedMsg): self {
         if (!$this->receivedMsg->contains($receivedMsg)) {
             $this->receivedMsg[] = $receivedMsg;
             $receivedMsg->addReceiver($this);
@@ -214,8 +198,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeReceivedMsg(Message $receivedMsg): self
-    {
+    public function removeReceivedMsg(Message $receivedMsg): self {
         if ($this->receivedMsg->contains($receivedMsg)) {
             $this->receivedMsg->removeElement($receivedMsg);
             $receivedMsg->removeReceiver($this);
@@ -224,13 +207,11 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRecovery(): ?string
-    {
+    public function getRecovery(): ?string {
         return $this->recovery;
     }
 
-    public function setRecovery(?string $recovery): self
-    {
+    public function setRecovery(?string $recovery): self {
         $this->recovery = $recovery;
 
         return $this;
@@ -239,13 +220,11 @@ class User implements UserInterface
     /**
      * @return Collection|Group[]
      */
-    public function getGroups(): Collection
-    {
+    public function getGroups(): Collection {
         return $this->groups;
     }
 
-    public function addGroup(Group $group): self
-    {
+    public function addGroup(Group $group): self {
         if (!$this->groups->contains($group)) {
             $this->groups[] = $group;
             $group->setOwner($this);
@@ -254,8 +233,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeGroup(Group $group): self
-    {
+    public function removeGroup(Group $group): self {
         if ($this->groups->contains($group)) {
             $this->groups->removeElement($group);
             // set the owning side to null (unless already changed)
@@ -270,28 +248,25 @@ class User implements UserInterface
     /**
      * @return Collection|Inbox[]
      */
-    public function getInboxes(): Collection
-    {
+    public function getInboxes(): Collection {
         return $this->inboxes;
     }
 
-    public function addInbox(Inbox $inbox): self
-    {
+    public function addInbox(Inbox $inbox): self {
         if (!$this->inboxes->contains($inbox)) {
             $this->inboxes[] = $inbox;
-            $inbox->setOwner($this);
+            $inbox->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeInbox(Inbox $inbox): self
-    {
+    public function removeInbox(Inbox $inbox): self {
         if ($this->inboxes->contains($inbox)) {
             $this->inboxes->removeElement($inbox);
             // set the owning side to null (unless already changed)
-            if ($inbox->getOwner() === $this) {
-                $inbox->setOwner(null);
+            if ($inbox->getUser() === $this) {
+                $inbox->setUser(null);
             }
         }
 
@@ -301,13 +276,11 @@ class User implements UserInterface
     /**
      * @return Collection|Friendship[]
      */
-    public function getFriendships(): Collection
-    {
+    public function getFriendships(): Collection {
         return $this->friendships;
     }
 
-    public function addFriendship(Friendship $friendship): self
-    {
+    public function addFriendship(Friendship $friendship): self {
         if (!$this->friendships->contains($friendship)) {
             $this->friendships[] = $friendship;
             $friendship->setSender($this);
@@ -316,8 +289,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeFriendship(Friendship $friendship): self
-    {
+    public function removeFriendship(Friendship $friendship): self {
         if ($this->friendships->contains($friendship)) {
             $this->friendships->removeElement($friendship);
             // set the owning side to null (unless already changed)
@@ -332,13 +304,11 @@ class User implements UserInterface
     /**
      * @return Collection|Friendship[]
      */
-    public function getReceivedFriendships(): Collection
-    {
+    public function getReceivedFriendships(): Collection {
         return $this->receivedFriendships;
     }
 
-    public function addReceivedFriendship(Friendship $receivedFriendship): self
-    {
+    public function addReceivedFriendship(Friendship $receivedFriendship): self {
         if (!$this->receivedFriendships->contains($receivedFriendship)) {
             $this->receivedFriendships[] = $receivedFriendship;
             $receivedFriendship->setReceiver($this);
@@ -347,8 +317,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeReceivedFriendship(Friendship $receivedFriendship): self
-    {
+    public function removeReceivedFriendship(Friendship $receivedFriendship): self {
         if ($this->receivedFriendships->contains($receivedFriendship)) {
             $this->receivedFriendships->removeElement($receivedFriendship);
             // set the owning side to null (unless already changed)
@@ -360,15 +329,27 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getName(): ?string
-    {
+    public function getName(): ?string {
         return $this->name;
     }
 
-    public function setName(string $name): self
-    {
+    public function setName(string $name): self {
         $this->name = $name;
 
         return $this;
+    }
+
+    public function getFriends() {
+        $friends = new ArrayCollection();
+
+         foreach ($this->getFriendships() as $friendship)
+             if (!$friendship->isPending())
+                $friends->add($friendship->getReceiver());
+
+         foreach ($this->getReceivedFriendships() as $friendship)
+             if (!$friendship->isPending())
+                 $friends->add($friendship->getSender());
+
+         return $friends;
     }
 }
