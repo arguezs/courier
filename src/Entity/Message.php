@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
@@ -170,15 +172,46 @@ class Message
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
 
         return $this;
+    }
+
+    public function sentWhen(){
+        $date = $this->getDate();
+        $today = new DateTime('NOW');
+
+        $diff = $today->diff($date);
+
+        if ($diff->y > 0 || $diff->m > 0)
+            return date('M y', $date->getTimestamp());
+        elseif($diff->d > 0)
+            return date('d M', $date->getTimestamp());
+        else
+            return date('H:i', $date->getTimestamp());
+    }
+
+    public function sentAgo(){
+        $today = new DateTime('NOW');
+
+        $diff = $today->diff($this->getDate());
+
+        if ($diff->y > 0)
+            return $diff->format('%y year' . ($diff->y>1?'s':''));
+        elseif ($diff->m > 0)
+            return $diff->format('%m month' . ($diff->m>1?'s':''));
+        elseif ($diff->d > 0)
+            return $diff->format('%d day' . ($diff->d>1?'s':''));
+        elseif ($diff->h > 0)
+            return $diff->format('%h hour' . ($diff->h>1?'s':''));
+        else
+            return $diff->format('%i minute' . ($diff->i>1?'s':''));
     }
 }

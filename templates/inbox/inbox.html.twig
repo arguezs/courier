@@ -13,11 +13,11 @@
     </ul>
 
     <table class="table table-hover table-sm">
-        {% if not messages  %}
+        {% if not inbox  %}
             No messages {{ sent ? 'sent' : 'received' }}
         {% else %}
-            {% for message in messages %}
-                {{ include('inbox/_messageRow.html.twig', {message: message.message}) }}
+            {% for row in inbox %}
+                {{ include('inbox/_messageRow.html.twig', {message: row.message}) }}
             {% endfor %}
         {% endif %}
     </table>
