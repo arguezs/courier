@@ -19,23 +19,17 @@ class InboxRepository extends ServiceEntityRepository {
     }
 
     public function findReceivedMessages(User $user){
-        $qb = $this->createQueryBuilder('received')
-            //->select('received.message')
-            ->where('received.user = :user')
-            ->setParameter('user', $user)
-            ->andWhere('received.in_out = :sent')
-            ->setParameter('sent', false);
-
-        return $qb->getQuery()->execute();
+        return $this->findBy([
+            'user' => $user,
+            'in_out' => true
+        ]);
     }
 
     public function findSentMessages(User $user){
-        return $this->createQueryBuilder('sent')
-            ->select('sent.message')
-            ->where('sent.user = :user')
-            ->setParameter('user', $user)
-            ->andWhere('sent.in_out = :sent')
-            ->setParameter('sent', true);
+        return $this->findBy([
+            'user' => $user,
+            'in_out' => false
+        ]);
     }
 
     // /**

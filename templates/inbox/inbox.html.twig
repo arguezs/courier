@@ -17,7 +17,7 @@
             No messages {{ sent ? 'sent' : 'received' }}
         {% else %}
             {% for message in messages %}
-                {{ include('_message_row.html.twig', {message: message}) }}
+                {{ include('inbox/_messageRow.html.twig', {message: message.message}) }}
             {% endfor %}
         {% endif %}
     </table>
