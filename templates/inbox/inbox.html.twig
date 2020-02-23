@@ -13,8 +13,8 @@
     </ul>
 
     <table class="table table-hover table-sm">
-        {% if not inbox  %}
-            No messages {{ sent ? 'sent' : 'received' }}
+        {% if inbox.count == 0  %}
+            <p class="h5 my-5">No messages {{ sent ? 'sent' : 'received' }}</p>
         {% else %}
             {% for row in inbox %}
                 {{ include('inbox/_messageRow.html.twig', {message: row.message}) }}
