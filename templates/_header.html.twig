@@ -5,7 +5,12 @@
         </a>
         <nav class="nav my-2 my-md-0 mr-md-3">
             {% if app.user %}
-                <a href="{{ path('friends') }}" class="btn btn-link text-secondary" id="menu-friends">Friends</a>
+                <a href="{{ path('friends') }}" class="btn btn-link text-secondary" id="menu-friends">
+                    Friends
+                    {% if app.user.friendRequests.count != 0 %}
+                        <span class="badge badge-info">{{ app.user.friendRequests.count }}</span>
+                    {% endif %}
+                </a>
                 <a href="{{ path('groups') }}" class="btn btn-link text-secondary" id="menu-groups">Groups</a>
                 <div class="dropdown">
                     <button class="btn btn-link text-secondary dropdown-toggle" id="menu-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ app.user.name }}</button>
