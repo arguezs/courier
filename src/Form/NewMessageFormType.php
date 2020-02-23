@@ -18,6 +18,7 @@ class NewMessageFormType extends AbstractType {
             ->add('forEmail', EmailType::class, [
                 'mapped' => false,
                 'attr' => [
+                    'multiple' => true,
                     'placeholder' => 'For',
                     'class' => 'form-control my-3'
                 ],
