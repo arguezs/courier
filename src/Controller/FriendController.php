@@ -62,7 +62,7 @@ class FriendController extends AbstractController {
                     $this->addFlash('success', 'Friendship request sent');
                 }
             } else
-                $this->addFlash('failure', 'The user does not exist');
+                $this->addFlash('danger', 'The user does not exist');
 
             return $this->redirectToRoute('friends');
         }
