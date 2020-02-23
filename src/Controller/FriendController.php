@@ -33,23 +33,38 @@ class FriendController extends AbstractController {
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
-            $userRepo = $this->getDoctrine()->getRepository(User::class);
-
-            $user = $userRepo->findOneBy(['email' => $form->get('receiver')->getData()]);
+            $user = $this
+                        ->getDoctrine()
+                        ->getRepository(User::class)
+                        ->findOneBy([
+                            'email' => $form->get('receiver')->getData()
+                        ]);
 
             if ($user){
-                $friendship->setReceiver($user);
+                if ($this->getUser()->getFriends()->contains($user))
+                    $this->addFlash('warning', 'You are already friends with ' . $user->getName());
+                else if ($this
+                            ->getDoctrine()
+                            ->getRepository(Friendship::class)
+                            ->findOneBy([
+                                'sender' => $this->getUser(),
+                                'receiver' => $user
+                            ]))
+                    $this->addFlash('warning', $user->getUsername() . ' already has a pending request from you');
+                else {
+                    $friendship->setReceiver($user);
 
-                $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager = $this->getDoctrine()->getManager();
 
-                $entityManager->persist($friendship);
-                $entityManager->flush();
+                    $entityManager->persist($friendship);
+                    $entityManager->flush();
 
-                $this->addFlash('success', 'Friendship request sent');
-            } else {
+                    $this->addFlash('success', 'Friendship request sent');
+                }
+            } else
                 $this->addFlash('failure', 'The user does not exist');
-            }
 
+            return $this->redirectToRoute('friends');
         }
 
         return $this->render('friends/friendList.html.twig', [
@@ -157,7 +172,8 @@ class FriendController extends AbstractController {
         $entityManager->flush();
 
         $this->addFlash('success',
-            'You are no longer friends with ' . ($friendship->getSender() == $this->getUser() ? $friendship->getReceiver()->getName() : $friendship->getSender()->getName()));
+            'You are no longer friends with ' .
+            ($friendship->getSender() == $this->getUser() ? $friendship->getReceiver()->getName() : $friendship->getSender()->getName()));
 
         return $this->redirectToRoute('friends');
     }
