@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groups - {% endblock %}
+
+{% block body %}
+    <h1 class="h3">Groups</h1>
+
+    <table class="table table-sm table-hover">
+        {% if groups %}
+            {{ groups.count }}
+            {#{% for group in groups %}
+                {{ include('groups/_groupRow.html.twig', {group: group}) }}
+            {% endfor %}#}
+        {% else %}
+            You haven´t created any groups yet
+        {% endif %}
+    </table>
+{% endblock %}
