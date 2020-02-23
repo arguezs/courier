@@ -117,4 +117,49 @@ class FriendController extends AbstractController {
         return $this->redirectToRoute('friends');
     }
 
+    /**
+     * @Route("/delete-friendship/{friendId}", name="delete_friendship")
+     * @param $friendId
+     * @return RedirectResponse
+     */
+    public function deleteFriendship($friendId) {
+        if (!$this->getUser())
+            return $this->redirectToRoute('sign_in');
+
+        $friend = $this
+                    ->getDoctrine()
+                    ->getRepository(User::class)
+                    ->find($friendId);
+
+        if (!$friend)
+            return $this->redirectToRoute('error', 404);
+
+        $friendshipRepo = $this->getDoctrine()->getRepository(Friendship::class);
+
+        $friendship = $friendshipRepo->findOneBy([
+            'sender' => $this->getUser(),
+            'receiver' => $friend
+        ]);
+
+        if (!$friendship)
+            $friendship = $friendshipRepo->findOneBy([
+                'sender' => $friend,
+                'receiver' => $this->getUser()
+            ]);
+
+        if (!$friendship || $friendship->isPending() ||
+            !($friendship->getSender() == $this->getUser() || $friendship->getReceiver() == $this->getUser()))
+            return $this->redirectToRoute('error', 404);
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $entityManager->remove($friendship);
+        $entityManager->flush();
+
+        $this->addFlash('success',
+            'You are no longer friends with ' . ($friendship->getSender() == $this->getUser() ? $friendship->getReceiver()->getName() : $friendship->getSender()->getName()));
+
+        return $this->redirectToRoute('friends');
+    }
+
 }

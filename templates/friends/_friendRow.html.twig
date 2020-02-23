@@ -6,6 +6,9 @@
         {{ friend.name }}
     </td>
     <td class="col-2 text-right">
-        <button class="btn btn-danger" data-id="{{ friend.id }}">Delete friend</button>
+        <a
+                href="{{ path('delete_friendship', {friendId: friend.id}) }}"
+                onclick="return confirm('You want to delete this friendship?')"
+                class="btn btn-danger">Delete friend</a>
     </td>
 </tr>
