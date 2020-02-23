@@ -59,4 +59,62 @@ class FriendController extends AbstractController {
         ]);
     }
 
+    /**
+     * @Route("/accept/{requestId}", name="accept_friendship")
+     * @param $requestId
+     * @return RedirectResponse
+     */
+    public function acceptFriendship($requestId) {
+        if (!$this->getUser())
+            return $this->redirectToRoute('sign_in');
+
+        $friendship = $this
+                        ->getDoctrine()
+                        ->getRepository(Friendship::class)
+                        ->find($requestId);
+
+        if (!$friendship || !$friendship->isPending() ||
+            $friendship->getReceiver() != $this->getUser())
+            return $this->redirectToRoute('error', ['errorCode' => 404]);
+
+        $friendship->setPending(false);
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $entityManager->persist($friendship);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'You are now friends with ' . $friendship->getSender()->getName());
+
+        return $this->redirectToRoute('friends');
+    }
+
+    /**
+     * @Route("/decline/{requestId}", name="decline_friendship")
+     * @param $requestId
+     * @return RedirectResponse
+     */
+    public function declineFriendship($requestId) {
+        if (!$this->getUser())
+            return $this->redirectToRoute('sign_in');
+
+        $friendship = $this
+            ->getDoctrine()
+            ->getRepository(Friendship::class)
+            ->find($requestId);
+
+        if (!$friendship || !$friendship->isPending() ||
+            $friendship->getReceiver() != $this->getUser())
+            return $this->redirectToRoute('error', ['errorCode' => 404]);
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $entityManager->remove($friendship);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Friendship declined');
+
+        return $this->redirectToRoute('friends');
+    }
+
 }

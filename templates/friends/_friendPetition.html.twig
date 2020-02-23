@@ -3,9 +3,9 @@
         {{ request.sender.username }}
     </td>
     <td class="col-1 text-right">
-        <button class="btn btn-success" data-id="{{ request.id }}">Accept</button>
+        <a href="{{ path('accept_friendship', {requestId: request.id}) }}" class="btn btn-success">Accept</a>
     </td>
     <td class="col-1 text-right">
-        <button class="btn btn-danger" data-id="{{ request.id }}">Decline</button>
+        <a href="{{ path('decline_friendship', {requestId: request.id}) }}" class="btn btn-danger">Decline</a>
     </td>
 </tr>
