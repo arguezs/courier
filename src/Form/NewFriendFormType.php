@@ -15,6 +15,7 @@ class NewFriendFormType extends AbstractType {
         $builder
             ->add('receiver', EmailType::class, [
                 'label' => false,
+                'mapped' => false,
                 'attr' => [
                     'placeholder' => 'Email address',
                     'class' => 'form-control my-3'
