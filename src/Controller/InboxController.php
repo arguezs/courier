@@ -15,39 +15,45 @@ use Symfony\Component\Routing\Annotation\Route;
 class InboxController extends AbstractController {
 
     /**
-     * @Route("/inbox", name="inbox")
+     * @Route("/inbox/{currentPage}", name="inbox")
      * @param Request $request
+     * @param int $currentPage
      * @return RedirectResponse|Response
      */
-    public function inbox(Request $request){
+    public function inbox(Request $request, $currentPage = 1){
         if (!$this->getUser())
             return $this->redirectToRoute('home');
 
-        $repository = $this
-            ->getDoctrine()
-            ->getRepository(Inbox::class);
-
-        return $this->render('inbox/inbox.html.twig', [
-            'inbox' => $repository->findReceivedMessages($this->getUser()),
-            'sent' => false,
-            'newMessageForm' => $this->newMessageForm($request)->createView()
-        ]);
+        return $this->getInbox($request, $currentPage);
     }
 
     /**
-     * @Route("/inbox/sent", name="outbox")
+     * @Route("/sent/{currentPage}", name="outbox")
      * @param Request $request
+     * @param int $currentPage
      * @return RedirectResponse|Response
      */
-    public function outbox(Request $request){
+    public function outbox(Request $request, $currentPage = 1){
         if (!$this->getUser())
             return $this->redirectToRoute('home');
 
-        $repository = $this->getDoctrine()->getRepository(Inbox::class);
+        return $this->getInbox($request, $currentPage, true);
+    }
+
+    public function getInbox(Request $request, $currentPage, $sent = false, $limit = 20) {
+
+        $messages = $this
+            ->getDoctrine()
+            ->getRepository(Inbox::class)
+            ->getMessages($this->getUser(), $currentPage, $limit, $sent);
+
+        $maxPages = ceil($messages['paginator']->count() / $limit);
 
         return $this->render('inbox/inbox.html.twig', [
-            'inbox' => $repository->findSentMessages($this->getUser()),
-            'sent' => true,
+            'inbox' => $messages['paginator'],
+            'maxPages' => $maxPages,
+            'thisPage' => $currentPage,
+            'sent' => $sent,
             'newMessageForm' => $this->newMessageForm($request)->createView()
         ]);
     }

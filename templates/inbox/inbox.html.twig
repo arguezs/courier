@@ -22,5 +22,23 @@
         {% endif %}
     </table>
 
+    {% if maxPages > 1 %}
+        <ul class="pagination pagination-sm justify-content-center">
+            <li class="page-item {{ thisPage == 1 ? 'disabled' }}">
+                <a href="{{ path(sent ? 'outbox' : 'inbox', {currentPage: thisPage - 1 }) }}" class="page-link text-secondary">Previous</a>
+            </li>
+
+            {% for i in 1..maxPages %}
+                <li class="page-item {{ i == thisPage ? 'active' }}">
+                    <a href="{{ path(sent ? 'outbox' : 'inbox', {currentPage: i}) }}" class="page-link {{ i == thisPage ? 'text-white' : 'text-secondary' }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+
+            <li class="page-item {{ thisPage == maxPages ? 'disabled' }}">
+                <a href="{{ path(sent ? 'outbox' : 'inbox', {currentPage: thisPage + 1}) }}" class="page-link text-secondary">Next</a>
+            </li>
+        </ul>
+    {% endif %}
+
     {{ include('inbox/_newMessageForm.html.twig') }}
 {% endblock %}

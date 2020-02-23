@@ -6,6 +6,7 @@ use App\Entity\Inbox;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @method Inbox|null find($id, $lockMode = null, $lockVersion = null)
@@ -30,6 +31,33 @@ class InboxRepository extends ServiceEntityRepository {
             'user' => $user,
             'in_out' => true
         ], [ 'message' => 'DESC' ]);
+    }
+
+    public function paginate($query, $page, $limit) {
+
+        $paginator = new Paginator($query);
+
+        $paginator->getQuery()
+            ->setFirstResult($limit  * ($page - 1))
+            ->setMaxResults($limit);
+
+        return $paginator;
+    }
+
+    public function getMessages($user, $page = 1, $limit = 20, $sent = false) {
+
+        $query = $this->createQueryBuilder('msg')
+            ->where('msg.user = :user AND msg.in_out = :sent')
+            ->setParameter('user', $user)
+            ->setParameter('sent', $sent)
+            ->orderBy('msg.id', 'DESC')
+            ->getQuery();
+
+        return array(
+            'paginator' => $this->paginate($query, $page, $limit),
+            'query' => $query
+        );
+
     }
 
     // /**
