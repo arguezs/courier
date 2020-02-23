@@ -3,14 +3,28 @@
 {% block title %}Friends - {% endblock %}
 
 {% block body %}
-    <h3 class="p-3">Friends</h3>
-    <table class="table table-sm table-hover">
+    <h1 class="h3 p-3">Friends</h1>
+    <table class="table table-sm table-hover mb-5">
         {% if friends.count != 0 %}
             {% for friend in friends %}
                 {{ include('friends/_friendRow.html.twig', {friend: friend}) }}
             {% endfor %}
         {% else %}
-            You don't have any friends yet
+            <p>You don't have any friends yet</p>
+            <buttton class="btn btn-info" data-toggle="modal" data-target="#new-frn-form">Add friends</buttton>
         {% endif %}
     </table>
+
+    <h2 class="h5 p-3">Friend requests</h2>
+    <table class="table table-sm table-hover">
+        {% if requests.count == 0 %}
+            You don´t have any request pending.
+        {% else %}
+            {% for request in requests %}
+                {{ include('friends/_friendPetition.html.twig', {request: request}) }}
+            {% endfor %}
+        {% endif %}
+    </table>
+
+    {{ include('friends/_newFriendForm.html.twig') }}
 {% endblock %}

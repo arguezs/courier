@@ -352,4 +352,14 @@ class User implements UserInterface {
 
          return $friends;
     }
+
+    public function getFriendRequests() {
+        $requests = new ArrayCollection();
+
+        foreach ($this->getReceivedFriendships() as $friendship)
+            if ($friendship->isPending())
+                $requests->add($friendship);
+
+        return $requests;
+    }
 }
