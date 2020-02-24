@@ -14,6 +14,7 @@ class GroupController extends AbstractController {
 
     /**
      * @Route("/groups", name="groups")
+     * @param Request $request
      * @return RedirectResponse|Response
      */
     public function groups(Request $request) {
@@ -39,6 +40,23 @@ class GroupController extends AbstractController {
         return $this->render('groups/groupList.html.twig', [
             'groups' => $this->getUser()->getGroups(),
             'newGroupForm' => $form->createView()
+        ]);
+    }
+
+    public function singleGroup($groupId){
+        if (!$this->getUser())
+            return $this->redirectToRoute('sign_in');
+
+        $group = $this
+            ->getDoctrine()
+            ->getRepository(Group::class)
+            ->find($groupId);
+
+        if ($group->getOwner() != $this->getUser())
+            return $this->redirectToRoute('error', 401);
+
+        return $this->render('groups/groupDetail.html.twig', [
+            'group' => $group
         ]);
     }
 
