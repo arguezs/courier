@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Group;
 use App\Form\NewGroupFormType;
+use App\Form\NewGroupMemberFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,8 +61,11 @@ class GroupController extends AbstractController {
         if ($group->getOwner() != $this->getUser())
             return $this->redirectToRoute('error', 401);
 
+        $form = $this->createForm(NewGroupMemberFormType::class, $group);
+
         return $this->render('groups/groupDetail.html.twig', [
-            'group' => $group
+            'group' => $group,
+            'newMemberForm' => $form->createView()
         ]);
     }
 
