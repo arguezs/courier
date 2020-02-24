@@ -68,28 +68,51 @@ class GroupController extends AbstractController {
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $users = $form->get('memberFriend')->getData();
-            if (!$users)
-                $users = new ArrayCollection();
-            $emails = explode(',', $form->get('memberMail')->getData());
+            $users = new ArrayCollection();
 
-            $userRepo = $this->getDoctrine()->getRepository(User::class);
+            $friends = $form->get('memberFriend')->getData();
+            $emails =  $form->get('memberMail')->getData();
 
-            foreach ($emails as $email){
-                $user = $userRepo->findOneBy(['email' => $email]);
-                if ($user)
-                    $users->add($user);
-            }
+            if ($friends != "" || $emails != "") {
+                $failures = 0;
 
-            foreach ($users as $user)
-                $group->addUser($user);
+                $userRepo = $this->getDoctrine()->getRepository(User::class);
 
-            $entityManager = $this->getDoctrine()->getManager();
+                if ($emails != ""){
+                    foreach ($emails as $email){
+                        $user = $userRepo->findOneBy(['email' => $email]);
+                        if ($user && !$group->getUser()->contains($user))
+                            $users->add($user);
+                        else
+                            $failures++;
+                    }
+                }
 
-            $entityManager->persist($group);
-            $entityManager->flush();
+                if ($friends != ""){
+                    foreach ($friends as $friend){
+                        if (!$group->getUser()->contains($friend))
+                            $users->add($friend);
+                        else
+                            $failures++;
+                    }
+                }
 
-            $this->addFlash('success', 'Members added.');
+                foreach ($users as $user)
+                    $group->addUser($user);
+
+                $entityManager = $this->getDoctrine()->getManager();
+
+                $entityManager->persist($group);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Members added.');
+                if ($failures > 0)
+                    $this->addFlash('warning',
+                        $failures . " member" . ($failures > 1 ? 's':'') . " could not be added to the group.");
+            } else
+                $this->addFlash('danger', 'You have to add at least one member.');
+
+
             return $this->redirectToRoute('single_group', ['groupId' => $group->getId()]);
         }
 

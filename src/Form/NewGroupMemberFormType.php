@@ -16,6 +16,7 @@ class NewGroupMemberFormType extends AbstractType {
             ->add('memberMail', EmailType::class, [
                 'label' => false,
                 'mapped' => false,
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control my-3',
                     'placeholder' => 'Email address',
