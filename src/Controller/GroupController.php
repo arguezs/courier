@@ -43,6 +43,11 @@ class GroupController extends AbstractController {
         ]);
     }
 
+    /**
+     * @Route("/group/{groupId}", name="single_group")
+     * @param $groupId
+     * @return RedirectResponse|Response
+     */
     public function singleGroup($groupId){
         if (!$this->getUser())
             return $this->redirectToRoute('sign_in');

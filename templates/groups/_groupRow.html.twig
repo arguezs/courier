@@ -1,6 +1,6 @@
-<tr class="row">
-    <td class="col d-flex justify-content-start align-items-center pl-3">
-        {{ group.name }}
+<tr class="row position-relative">
+    <td class="col d-flex justify-content-start align-items-center pl-3 position-static">
+        <a href="{{ path('single_group', {groupId: group.id}) }}" class="text-reset text-decoration-none stretched-link">{{ group.name }}</a>
     </td>
     <td class="col-2 d-flex justify-content-center align-items-center">
         {{ group.user.count }} members
