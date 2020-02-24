@@ -3,16 +3,18 @@
 {% block title %}Groups - {% endblock %}
 
 {% block body %}
-    <h1 class="h3">Groups</h1>
-
-    <table class="table table-sm table-hover">
-        {% if groups %}
-            {{ groups.count }}
-            {#{% for group in groups %}
-                {{ include('groups/_groupRow.html.twig', {group: group}) }}
-            {% endfor %}#}
+    <h1 class="h3 p-3">Groups</h1>
+        {% if groups.count != 0 %}
+            <button class="btn btn-info float-right mb-3" data-toggle="modal" data-target="#new-grp-form">Create a group</button>
+            <table class="table table-sm table-hover">
+                {% for group in groups %}
+                    {{ include('groups/_groupRow.html.twig', {group: group}) }}
+                {% endfor %}
+            </table>
         {% else %}
-            You haven´t created any groups yet
+            <p>You haven't created any groups yet</p>
+            <button class="btn btn-info" data-toggle="modal" data-target="#new-grp-form">Create a group</button>
         {% endif %}
-    </table>
+
+    {{ include('groups/_groupCreationForm.html.twig') }}
 {% endblock %}
