@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Group;
+use App\Entity\User;
 use App\Form\NewGroupFormType;
 use App\Form\NewGroupMemberFormType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,10 +48,11 @@ class GroupController extends AbstractController {
 
     /**
      * @Route("/group/{groupId}", name="single_group")
+     * @param Request $request
      * @param $groupId
      * @return RedirectResponse|Response
      */
-    public function singleGroup($groupId){
+    public function singleGroup(Request $request, $groupId){
         if (!$this->getUser())
             return $this->redirectToRoute('sign_in');
 
@@ -62,6 +65,33 @@ class GroupController extends AbstractController {
             return $this->redirectToRoute('error', 401);
 
         $form = $this->createForm(NewGroupMemberFormType::class, $group);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $users = $form->get('memberFriend')->getData();
+            if (!$users)
+                $users = new ArrayCollection();
+            $emails = explode(',', $form->get('memberMail')->getData());
+
+            $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+            foreach ($emails as $email){
+                $user = $userRepo->findOneBy(['email' => $email]);
+                if ($user)
+                    $users->add($user);
+            }
+
+            foreach ($users as $user)
+                $group->addUser($user);
+
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $entityManager->persist($group);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Members added.');
+            return $this->redirectToRoute('single_group', ['groupId' => $group->getId()]);
+        }
 
         return $this->render('groups/groupDetail.html.twig', [
             'group' => $group,
