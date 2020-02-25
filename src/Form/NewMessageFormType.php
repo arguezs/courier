@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Group;
 use App\Entity\Message;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,12 +20,39 @@ class NewMessageFormType extends AbstractType {
         $builder
             ->add('forEmail', EmailType::class, [
                 'mapped' => false,
+                'required' => false,
                 'attr' => [
-                    'multiple' => true,
                     'placeholder' => 'For',
-                    'class' => 'form-control my-3'
+                    'class' => 'form-control my-3',
+                    'multiple' => true
                 ],
                 'label' => false
+            ])
+            ->add('forFriends', EntityType::class, [
+                'mapped' => false,
+                'class' => User::class,
+                'multiple' => true,
+                'group_by' => function(){return 'Friends';},
+                'choices' => $builder->getData()->getSender()->getFriends(),
+                'choice_label' => 'name',
+                'attr' => [
+                    'class' => 'form-control my-3'
+                ],
+                'label' => false,
+                'required' => false
+            ])
+            ->add('forGroups', EntityType::class, [
+                'mapped' => false,
+                'class' => Group::class,
+                'multiple' => true,
+                'group_by' => function(){return 'Groups';},
+                'choices' => $builder->getData()->getSender()->getGroups(),
+                'choice_label' => 'name',
+                'attr' => [
+                    'class' => 'form-control my-3'
+                ],
+                'label' => false,
+                'required' => false
             ])
             ->add('about', TextType::class, [
                 'required' => true,
