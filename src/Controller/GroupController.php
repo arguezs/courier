@@ -122,4 +122,30 @@ class GroupController extends AbstractController {
         ]);
     }
 
+    /**
+     * @Route("/groups/delete/{groupId}", name="group_delete")
+     * @param $groupId
+     * @return RedirectResponse
+     */
+    public function deleteGroup($groupId = 0){
+        if (!$this->getUser())
+            return $this->redirectToRoute('sign_in');
+
+        $group = $this->getDoctrine()
+                    ->getRepository(Group::class)
+                    ->find($groupId);
+
+        if (!$group || $group->getOwner() != $this->getUser())
+            return $this->redirectToRoute('error', ['errorCode' => 404]);
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $entityManager->remove($group);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'The group ' . $group->getName() . ' was successfully removed');
+
+        return $this->redirectToRoute('groups');
+    }
+
 }
