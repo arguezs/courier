@@ -33,7 +33,7 @@ class Group {
     /**
      * @var \User
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="groups")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
      * })
@@ -41,9 +41,9 @@ class Group {
     private $owner;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="group")
+     * @ORM\ManyToMany(targetEntity="User")
      * @ORM\JoinTable(name="group_user",
      *   joinColumns={
      *     @ORM\JoinColumn(name="group_id", referencedColumnName="id")
