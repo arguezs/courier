@@ -6,7 +6,7 @@
     <div class="w-75 mx-auto my-3 position-relative text-justify">
         <h5 id="back-button" class="mt-3"><i class="fas fa-arrow-left"></i></h5>
         <h3 id="msg-about">{{ message.about }}</h3>
-        <button type="button" class="btn btn-outline-danger float-right" id="dlt-msg-btn">Delete</button>
+        <a href="{{ path('delete_msg', {messageId: message.id}) }}" onclick="return confirm('Delete this message?')" type="button" class="btn btn-outline-danger float-right" id="dlt-msg-btn">Delete</a>
 
         <p class="text-secondary mb-0">
             From:
