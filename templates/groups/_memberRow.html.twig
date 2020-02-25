@@ -1,6 +1,6 @@
 <tr class="row">
     <td class="col d-flex justify-content-start align-items-center pl-3">
-        {{ user.username }}
+        {{ include('_userNameDisplay.html.twig', {user: user}) }}
     </td>
     <td class="col-2">
         <a href="{{ path('member_delete', {'groupId': group.id, 'userId': user.id}) }}"

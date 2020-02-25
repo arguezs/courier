@@ -10,13 +10,7 @@
 
         <p class="text-secondary mb-0">
             From:
-            {% if message.sender == app.user %}
-                Me
-            {% elseif app.user.friends.contains(message.sender) %}
-                {{ message.sender.name }}
-            {% else %}
-                {{ message.sender.username }}
-            {% endif %}
+            {{ include('_userNameDisplay.html.twig', {user: message.sender}) }}
         </p>
         <p class="text-secondary mt-0">
             for

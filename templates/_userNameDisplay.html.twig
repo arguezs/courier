@@ -1,0 +1,7 @@
+{% if app.user == user %}
+    Me
+{% elseif app.user.friends.contains(user) %}
+    {{ user.name }} <span class="text-muted ml-1">({{ user.username }})</span>
+{% else %}
+    {{ user.username }}
+{% endif %}

@@ -1,19 +1,13 @@
 <tr
         id="{{ message.id }}"
         class="message-row row position-relative text-justify {{ row.isRead ? '' : 'font-weight-bold' }}">
-    <td class="col-sm col-lg-2 px-3 text-truncate">
-        {#{% if app.user.friends.contains(message.sender) %}
-            {{ message.sender.usrName }}#}
-        {% if message.sender == app.user %}
-            Me
-        {% else %}
-            {{ message.sender.username }}
-        {% endif %}
+    <td class="col-3 px-3 text-truncate">
+        {{ include('_userNameDisplay.html.twig', {user: message.sender}) }}
     </td>
-    <td class="col-sm col-lg-9 px-3 text-truncate position-static">
+    <td class="col px-3 text-truncate position-static">
         <a href="{{ path('message', {id: message.id}) }}" class="text-reset text-decoration-none stretched-link">
             {{ message.about }}
         </a>
     </td>
-    <td class="col-sm col-lg-1 text-right px-3">{{ message.sentWhen }}</td>
+    <td class="col-1 text-right px-3">{{ message.sentWhen }}</td>
 </tr>

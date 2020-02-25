@@ -29,6 +29,7 @@ class NewGroupMemberFormType extends AbstractType {
                 'mapped' => false,
                 'multiple' => true,
                 'choices' => $builder->getData()->getOwner()->getFriends(),
+                'group_by' => function() {return 'Friends';},
                 'choice_label' => 'name',
                 'attr' => [
                     'class' => 'form-control mb-3'
