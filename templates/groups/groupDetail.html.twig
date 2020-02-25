@@ -17,5 +17,9 @@
         </table>
     {% endif %}
 
-    {{ include('groups/_newGroupMemberForm.html.twig') }}
+    {{ include('_formModal.html.twig', {
+        formId: 'new-member-form',
+        formTitle: 'Add members',
+        form: newMemberForm
+    }) }}
 {% endblock %}

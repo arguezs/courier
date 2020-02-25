@@ -4,16 +4,17 @@
 
 {% block body %}
     <h1 class="h3 p-3">Friends</h1>
-    <table class="table table-sm table-hover mb-5">
         {% if friends.count != 0 %}
-            {% for friend in friends %}
-                {{ include('friends/_friendRow.html.twig', {friend: friend}) }}
-            {% endfor %}
+            <button class="btn btn-info float-right mb-3" data-toggle="modal" data-target="#new-frn-form">Add friends</button>
+            <table class="table table-sm table-hover mb-5">
+                {% for friend in friends %}
+                    {{ include('friends/_friendRow.html.twig', {friend: friend}) }}
+                {% endfor %}
+            </table>
         {% else %}
             <p>You don't have any friends yet</p>
             <button class="btn btn-info" data-toggle="modal" data-target="#new-frn-form">Add friends</button>
         {% endif %}
-    </table>
 
     <h2 class="h5 p-3">Friend requests</h2>
     <table class="table table-sm table-hover">
@@ -26,5 +27,9 @@
         {% endif %}
     </table>
 
-    {{ include('friends/_newFriendForm.html.twig') }}
+    {{ include('_formModal.html.twig', {
+        formId: 'new-frn-form',
+        form: newFriendForm,
+        formTitle: 'Add new friend'
+    }) }}
 {% endblock %}
