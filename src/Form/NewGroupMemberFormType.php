@@ -26,13 +26,12 @@ class NewGroupMemberFormType extends AbstractType {
             ->add('memberFriend', EntityType::class, [
                 'class' => User::class,
                 'label' => false,
-                'placeholder' => 'Friends',
                 'mapped' => false,
+                'multiple' => true,
                 'choices' => $builder->getData()->getOwner()->getFriends(),
                 'choice_label' => 'name',
                 'attr' => [
-                    'class' => 'form-control mb-3',
-                    'multiple' => true
+                    'class' => 'form-control mb-3'
                 ]
             ])
             ->add('submit', SubmitType::class, [
