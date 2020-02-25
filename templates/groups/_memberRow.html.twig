@@ -3,6 +3,8 @@
         {{ user.username }}
     </td>
     <td class="col-2">
-        <button class="btn btn-danger">Delete member</button>
+        <a href="{{ path('member_delete', {'groupId': group.id, 'userId': user.id}) }}"
+           onclick="return confirm('Remove {{ user.username }} from group {{ group.name }}?')"
+           class="btn btn-danger">Delete member</a>
     </td>
 </tr>

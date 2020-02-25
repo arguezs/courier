@@ -149,4 +149,40 @@ class GroupController extends AbstractController {
         return $this->redirectToRoute('groups');
     }
 
+    /**
+     * @Route("/group/{groupId}/delete/{userId}", name="member_delete")
+     * @param int $groupId
+     * @param int $userId
+     * @return RedirectResponse
+     */
+    public function deleteGroupMember($groupId = 0, $userId = 0){
+        if (!$this->getUser())
+            return $this->redirectToRoute('sign_in');
+
+        $group = $this->getDoctrine()
+            ->getRepository(Group::class)
+            ->find($groupId);
+
+        if (!$group || $group->getOwner() != $this->getUser())
+            return $this->redirectToRoute('error', ['errorCode' => 404]);
+
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($userId);
+
+        if (!$user || !$group->getUser()->contains($user))
+            return $this->redirectToRoute('error', ['errorCode' => 404]);
+
+        $group->removeUser($user);
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $entityManager->persist($group);
+        $entityManager->flush();
+
+        $this->addFlash('success', $user->getUsername() . ' was removed from the group '. $group->getName());
+
+        return $this->redirectToRoute('single_group', ['groupId' => $groupId]);
+    }
+
 }
