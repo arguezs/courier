@@ -79,6 +79,7 @@ class GroupController extends AbstractController {
                 $userRepo = $this->getDoctrine()->getRepository(User::class);
 
                 if ($emails != ""){
+                    $emails = explode(',', $emails);
                     foreach ($emails as $email){
                         $user = $userRepo->findOneBy(['email' => $email]);
                         if ($user && !$group->getUser()->contains($user))
