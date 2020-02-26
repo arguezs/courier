@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Inbox;
 use App\Entity\Message;
 use App\Form\MessageReplyFormType;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,7 @@ class MessageController extends AbstractController {
      * @param $messageId
      * @param Request $request
      * @return RedirectResponse|Response
+     * @throws Exception
      */
     public function message($messageId, Request $request){
         if (!$this->getUser())
