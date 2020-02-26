@@ -6,10 +6,10 @@
         {{ friend.name }}
         <span class="text-muted ml-3">({{ friend.username }})</span>
     </td>
-    <td class="col-2 text-right">
+    <td class="col-1 d-flex align-items-center justify-content-center">
         <a
                 href="{{ path('delete_friendship', {friendId: friend.id}) }}"
                 onclick="return confirm('You want to delete this friendship?')"
-                class="btn btn-danger">Delete friend</a>
+                class="btn btn-outline-danger"><i class="fas fa-ban"></i></a>
     </td>
 </tr>

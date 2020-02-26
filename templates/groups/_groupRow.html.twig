@@ -5,7 +5,7 @@
     <td class="col-2 d-flex justify-content-center align-items-center">
         {{ group.user.count }} members
     </td>
-    <td class="col-2">
-        <a href="{{ path('group_delete', {groupId: group.id}) }}" onclick="return confirm('Delete group {{ group.name }}?')" class="btn btn-danger">Delete group</a>
+    <td class="col-1 d-flex justify-content-center align-items-center">
+        <a href="{{ path('group_delete', {groupId: group.id}) }}" onclick="return confirm('Delete group {{ group.name }}?')" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
     </td>
 </tr>

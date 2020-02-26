@@ -2,10 +2,10 @@
     <td class="col d-flex align-items-center justify-content-start pl-3">
         {{ request.sender.username }}
     </td>
-    <td class="col-1 text-right">
-        <a href="{{ path('accept_friendship', {requestId: request.id}) }}" class="btn btn-success">Accept</a>
+    <td class="col-auto text-right">
+        <a href="{{ path('accept_friendship', {requestId: request.id}) }}" class="btn btn-success"><i class="far fa-check-circle"></i></a>
     </td>
-    <td class="col-1 text-right">
-        <a href="{{ path('decline_friendship', {requestId: request.id}) }}" class="btn btn-danger">Decline</a>
+    <td class="col-auto text-right">
+        <a href="{{ path('decline_friendship', {requestId: request.id}) }}" class="btn btn-outline-danger"><i class="fas fa-ban"></i></a>
     </td>
 </tr>

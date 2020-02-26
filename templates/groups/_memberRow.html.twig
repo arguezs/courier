@@ -2,9 +2,9 @@
     <td class="col d-flex justify-content-start align-items-center pl-3">
         {{ include('_userNameDisplay.html.twig', {user: user}) }}
     </td>
-    <td class="col-2">
+    <td class="col-1 d-flex justify-content-center align-items-center">
         <a href="{{ path('member_delete', {'groupId': group.id, 'userId': user.id}) }}"
            onclick="return confirm('Remove {{ user.username }} from group {{ group.name }}?')"
-           class="btn btn-danger">Delete member</a>
+           class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
     </td>
 </tr>
