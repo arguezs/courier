@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User profile - {% endblock %}
+
+{% block body %}
+    <h1 class="h3 my-3">{{ app.user.name }}</h1>
+
+    <div class="w-75 m-auto">
+        {{ form_start(profileForm) }}
+            {{ form_widget(profileForm.name) }}
+            {{ form_widget(profileForm.email) }}
+            <hr>
+            {{ form_widget(profileForm.password) }}
+        {{ form_end(profileForm) }}
+    </div>
+{% endblock %}
