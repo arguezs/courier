@@ -50,6 +50,15 @@ class InboxController extends AbstractController {
 
         $maxPages = ceil($messages['paginator']->count() / $limit);
 
+        $unread = count($this
+            ->getDoctrine()
+            ->getRepository(Inbox::class)
+            ->findBy([
+                'user' => $this->getUser(),
+                'in_out' => false,
+                'is_read' => false
+            ]));
+
         $message = new Message();
         $message->setSender($this->getUser());
 
@@ -116,7 +125,8 @@ class InboxController extends AbstractController {
             'maxPages' => $maxPages,
             'thisPage' => $currentPage,
             'sent' => $sent,
-            'newMessageForm' => $form->createView()
+            'newMessageForm' => $form->createView(),
+            'unread' => $unread
         ]);
     }
 

@@ -5,7 +5,12 @@
 
     <ul class="nav nav-tabs border-0">
         <li class="nav-item" id="received-msg">
-            <a href="{{ path('inbox') }}" class="nav-link text-secondary {% if not sent  %} active {% endif %}">Received</a>
+            <a href="{{ path('inbox') }}" class="nav-link text-secondary {% if not sent  %} active {% endif %}">
+                Received
+                {% if unread > 0 %}
+                    <span class="badge badge-secondary">{{ unread }}</span>
+                {% endif %}
+            </a>
         </li>
         <li class="nav-item" id="sent-msg">
             <a href="{{ path('outbox') }}" class="nav-link text-secondary {% if sent  %} active {% endif %}">Sent</a>
