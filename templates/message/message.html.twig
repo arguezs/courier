@@ -31,6 +31,9 @@
 
         <p class="text-muted">({{ message.sentAgo }} ago)</p>
 
-        {{ message.body }}
+        {% set paragraphs = message.body|split('\n') %}
+        {% for paragraph in paragraphs %}
+            <p>{{ paragraph }}</p>
+        {% endfor %}
     </div>
 {% endblock %}
