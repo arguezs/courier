@@ -5,7 +5,7 @@
         {{ include('_userNameDisplay.html.twig', {user: message.sender}) }}
     </td>
     <td class="col px-3 text-truncate position-static">
-        <a href="{{ path('message', {id: message.id}) }}" class="text-reset text-decoration-none stretched-link">
+        <a href="{{ path('message', {messageId: message.id}) }}" class="text-reset text-decoration-none stretched-link">
             {{ message.about }}
         </a>
     </td>

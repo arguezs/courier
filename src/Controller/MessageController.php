@@ -4,29 +4,51 @@ namespace App\Controller;
 
 use App\Entity\Inbox;
 use App\Entity\Message;
+use App\Form\MessageReplyFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MessageController extends AbstractController {
 
     /**
-     * @Route("/message/{id}", name="message")
-     * @param $id
+     * @Route("/message/{messageId}", name="message")
+     * @param $messageId
+     * @param Request $request
      * @return RedirectResponse|Response
      */
-    public function message($id){
+    public function message($messageId, Request $request){
         if (!$this->getUser())
             return $this->redirectToRoute('home');
 
-        $message = $this->isVisible($id);
+        $message = $this->isVisible($messageId);
 
         if (!$message)
             return $this->redirectToRoute('error', 404);
 
+        $reply = new Message();
+        $reply->setSender($this->getUser());
+        $reply->addReceiver($message->getSender());
+        $reply->setAbout(preg_match("/^RE:/", $message->getAbout()) ? '' : 'RE: ' . $message->getAbout());
+
+        $form = $this->createForm(MessageReplyFormType::class, $reply);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $reply->setDate(new \DateTime('NOW'));
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $entityManager->persist($reply);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Reply sent.');
+            return $this->redirectToRoute('message', ['messageId' => $messageId]);
+        }
+
         return $this->render('message/message.html.twig', [
-            'message' => $message
+            'message' => $message,
+            'replyForm' => $form->createView()
         ]);
     }
 
