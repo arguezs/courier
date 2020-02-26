@@ -18,9 +18,9 @@ This project is being developed as final project for the Server Side Web Develop
 - __Login:__ Once registered, users can login with their username and password.
 - __Messages:__ Users can send and receive messages. Messages are sent through the username.
 - __Friends:__ Users can establish friendship with other users.
+- __Groups:__ Users can create groups of other users.
 
 ### Upcoming features
-- __Groups__
 - __Password recovery__
 - __Avatars__
 - __User profile__
