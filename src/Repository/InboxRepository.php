@@ -19,20 +19,6 @@ class InboxRepository extends ServiceEntityRepository {
         parent::__construct($registry, Inbox::class);
     }
 
-    public function findReceivedMessages(User $user){
-        return $this->findBy([
-            'user' => $user,
-            'in_out' => false
-        ], [ 'message' => 'DESC' ]);
-    }
-
-    public function findSentMessages(User $user){
-        return $this->findBy([
-            'user' => $user,
-            'in_out' => true
-        ], [ 'message' => 'DESC' ]);
-    }
-
     public function paginate($query, $page, $limit) {
 
         $paginator = new Paginator($query);
