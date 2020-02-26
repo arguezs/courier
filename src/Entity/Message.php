@@ -11,8 +11,8 @@ use DateTime;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
  */
-class Message
-{
+class Message {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -56,49 +56,41 @@ class Message
      */
     private $date;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->receiver = new ArrayCollection();
         $this->response = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getAbout(): ?string
-    {
+    public function getAbout(): ?string {
         return $this->about;
     }
 
-    public function setAbout(string $about): self
-    {
-        $this->about = $about;
+    public function setAbout(string $about): self {
+        $this->about = strip_tags($about);
 
         return $this;
     }
 
-    public function getSender(): ?User
-    {
+    public function getSender(): ?User {
         return $this->sender;
     }
 
-    public function setSender(?User $sender): self
-    {
+    public function setSender(?User $sender): self {
         $this->sender = $sender;
 
         return $this;
     }
 
-    public function getBody(): ?string
-    {
+    public function getBody(): ?string {
         return $this->body;
     }
 
-    public function setBody(string $body): self
-    {
-        $this->body = $body;
+    public function setBody(string $body): self {
+        $this->body = strip_tags($body);
 
         return $this;
     }
@@ -106,13 +98,11 @@ class Message
     /**
      * @return Collection|User[]
      */
-    public function getReceiver(): Collection
-    {
+    public function getReceiver(): Collection {
         return $this->receiver;
     }
 
-    public function addReceiver(User $receiver): self
-    {
+    public function addReceiver(User $receiver): self {
         if (!$this->receiver->contains($receiver)) {
             $this->receiver[] = $receiver;
         }
@@ -120,8 +110,7 @@ class Message
         return $this;
     }
 
-    public function removeReceiver(User $receiver): self
-    {
+    public function removeReceiver(User $receiver): self {
         if ($this->receiver->contains($receiver)) {
             $this->receiver->removeElement($receiver);
         }
@@ -129,13 +118,11 @@ class Message
         return $this;
     }
 
-    public function getResponses(): ?self
-    {
+    public function getResponses(): ?self {
         return $this->responses;
     }
 
-    public function setResponses(?self $responses): self
-    {
+    public function setResponses(?self $responses): self {
         $this->responses = $responses;
 
         return $this;
@@ -144,13 +131,11 @@ class Message
     /**
      * @return Collection|self[]
      */
-    public function getResponse(): Collection
-    {
+    public function getResponse(): Collection {
         return $this->response;
     }
 
-    public function addResponse(self $response): self
-    {
+    public function addResponse(self $response): self {
         if (!$this->response->contains($response)) {
             $this->response[] = $response;
             $response->setResponses($this);
@@ -159,8 +144,7 @@ class Message
         return $this;
     }
 
-    public function removeResponse(self $response): self
-    {
+    public function removeResponse(self $response): self {
         if ($this->response->contains($response)) {
             $this->response->removeElement($response);
             // set the owning side to null (unless already changed)
@@ -172,19 +156,17 @@ class Message
         return $this;
     }
 
-    public function getDate(): ?DateTimeInterface
-    {
+    public function getDate(): ?DateTimeInterface {
         return $this->date;
     }
 
-    public function setDate(DateTimeInterface $date): self
-    {
+    public function setDate(DateTimeInterface $date): self {
         $this->date = $date;
 
         return $this;
     }
 
-    public function sentWhen(){
+    public function sentWhen() {
         $date = $this->getDate();
         $today = new DateTime('NOW');
 
@@ -198,7 +180,7 @@ class Message
             return date('H:i', $date->getTimestamp());
     }
 
-    public function sentAgo(){
+    public function sentAgo() {
         $today = new DateTime('NOW');
 
         $diff = $today->diff($this->getDate());
