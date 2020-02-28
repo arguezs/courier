@@ -45,7 +45,8 @@ class ProfileFormType extends AbstractType {
                         'mimeTypesMessage' => 'Image must be JPG or PNG',
                         'maxSizeMessage' => 'Image must be max 512Kb'
                     ])
-                ]
+                ],
+                'attr' => ['class' => 'form-control-file']
             ])
             ->add('password', RepeatedType::class, [
                 'mapped' => false,
