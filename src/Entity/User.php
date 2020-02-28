@@ -368,13 +368,11 @@ class User implements UserInterface {
         return $requests;
     }
 
-    public function getAvatar(): ?string
-    {
+    public function getAvatar(): ?string {
         return $this->avatar;
     }
 
-    public function setAvatar(?string $avatar): self
-    {
+    public function setAvatar(?string $avatar = 'generic.jpg'): self {
         $this->avatar = $avatar;
 
         return $this;

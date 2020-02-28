@@ -1,11 +1,11 @@
-<header class="bg-white border-bottom shadow-sm">
+<header class="bg-white border-bottom shadow-sm h-25">
     <div class="container d-flex p-3 align-items-center">
         <a href="{{ path('home') }}" type="button" class="btn btn-light bg-transparent mr-md-auto border-0" id="home-button">
             <h5 class="my-0 font-weight-normal">Courier 2</h5>
         </a>
         <nav class="nav my-2 my-md-0 mr-md-3">
             {% if app.user %}
-                <a href="{{ path('friends') }}" class="btn btn-link text-secondary" id="menu-friends">
+                {#<a href="{{ path('friends') }}" class="btn btn-link text-secondary" id="menu-friends">
                     Friends
                     {% if app.user.friendRequests.count != 0 %}
                         <span class="badge badge-info">{{ app.user.friendRequests.count }}</span>
@@ -16,9 +16,30 @@
                     <button class="btn btn-link text-secondary dropdown-toggle" id="menu-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ app.user.name }}</button>
 
                     <div class="dropdown-menu" aria-labelledby="menu-user">
-                        <button type="button" class="btn btn-link text-secondary dropdown-item" id="menu-profile">Profile</button>
+                        <a href="{{ path('profile') }}" type="button" class="btn btn-link text-secondary dropdown-item" id="menu-profile">Profile</a>
                         <a href="{{ path('app_logout') }}" type="button" class="btn btn-link text-danger dropdown-item" id="menu-log-out">Log out</a>
                     </div>
+                </div>#}
+
+                <div class="media">
+                    <div class="media-body d-inline-flex align-items-center">
+                        <a href="{{ path('friends') }}" class="btn btn-link text-secondary" id="menu-friends">
+                            Friends
+                            {% if app.user.friendRequests.count != 0 %}
+                                <span class="badge badge-info">{{ app.user.friendRequests.count }}</span>
+                            {% endif %}
+                        </a>
+                        <a href="{{ path('groups') }}" class="btn btn-link text-secondary" id="menu-groups">Groups</a>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-secondary dropdown-toggle" id="menu-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ app.user.name }}</button>
+
+                            <div class="dropdown-menu" aria-labelledby="menu-user">
+                                <a href="{{ path('profile') }}" type="button" class="btn btn-link text-secondary dropdown-item" id="menu-profile">Profile</a>
+                                <a href="{{ path('app_logout') }}" type="button" class="btn btn-link text-danger dropdown-item" id="menu-log-out">Log out</a>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="{{ asset('uploads/avatars/' ~ app.user.avatar) }}" alt="{{ app.user.name }}" style="max-width:5vh!important;">
                 </div>
             {% else %}
                 <a href="{{ path('sign_in') }}" class="btn btn-link text-secondary" id="menu-sign-in">Sign in</a>
