@@ -1,6 +1,6 @@
 <tr class="row">
     <td class="col-1">
-        {#<img src="{{ friend.usrAvatar }}" class="mw-100 avatar">#}
+        <img src="{{ asset('uploads/avatars/' ~ friend.avatar) }}" class="mw-100 avatar">
     </td>
     <td class="col d-flex align-items-center justify-content-start pl-3">
         {{ friend.name }}

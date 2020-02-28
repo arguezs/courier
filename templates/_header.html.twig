@@ -39,7 +39,7 @@
                             </div>
                         </div>
                     </div>
-                    <img src="{{ asset('uploads/avatars/' ~ app.user.avatar) }}" alt="{{ app.user.name }}" style="max-width:5vh!important;">
+                    <img src="{{ asset('uploads/avatars/' ~ app.user.avatar) }}" alt="{{ app.user.name }}" class="rounded-circle" style="max-width:5vh!important;">
                 </div>
             {% else %}
                 <a href="{{ path('sign_in') }}" class="btn btn-link text-secondary" id="menu-sign-in">Sign in</a>
