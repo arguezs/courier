@@ -48,13 +48,14 @@ class ProfileFormType extends AbstractType {
                 ],
                 'attr' => ['class' => 'form-control-file']
             ])
-            ->add('password', RepeatedType::class, [
+            ->add('newPassword', RepeatedType::class, [
                 'mapped' => false,
+                'required' => false,
                 'type' => PasswordType::class,
                 'first_options' =>[
                     'label' => false,
                     'attr' => [
-                        'placeholder' => 'Password',
+                        'placeholder' => 'New password',
                         'class' => 'form-control my-3'
                     ]
                 ],
@@ -62,9 +63,14 @@ class ProfileFormType extends AbstractType {
                     'label' => false,
                     'attr' => [
                         'class' => 'form-control my-3',
-                        'placeholder' => 'Repeat password'
+                        'placeholder' => 'Repeat new password'
                     ]
                 ]
+            ])
+            ->add('password', PasswordType::class, [
+                'label' => false,
+                'mapped' => false,
+                'attr' => ['placeholder' => 'Password']
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Update profile',

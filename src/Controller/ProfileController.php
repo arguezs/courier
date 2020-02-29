@@ -31,10 +31,10 @@ class ProfileController extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()){
             $password = $form->get('password')->getData();
 
-            /** @var UploadedFile $avatar */
-            $avatar = $form->get('avatar')->getData();
-
             if ($encoder->isPasswordValid($this->getUser(), $password)){
+
+                /** @var UploadedFile $avatar */
+                $avatar = $form->get('avatar')->getData();
 
                 if ($avatar){
                     $originalName = pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME);
@@ -53,6 +53,11 @@ class ProfileController extends AbstractController {
 
                     $this->getUser()->setAvatar($newFilename);
                 }
+
+                $newPassword = $form->get('newPassword')->getData();
+
+                if ($newPassword != "")
+                    $this->getUser()->setPassword($encoder->encodePassword($this->getUser(), $newPassword));
 
                 $entityManager = $this->getDoctrine()->getManager();
 
