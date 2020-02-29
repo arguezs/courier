@@ -18,7 +18,6 @@ class NewGroupMemberFormType extends AbstractType {
                 'mapped' => false,
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-control my-3',
                     'placeholder' => 'Email address',
                     'multiple' => true
                 ]
@@ -30,14 +29,11 @@ class NewGroupMemberFormType extends AbstractType {
                 'multiple' => true,
                 'choices' => $builder->getData()->getOwner()->getFriends(),
                 'group_by' => function() {return 'Friends';},
-                'choice_label' => 'name',
-                'attr' => [
-                    'class' => 'form-control mb-3'
-                ]
+                'choice_label' => 'name'
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Add members',
-                'attr' => ['class' => 'btn btn-secondary']
+                'attr' => ['class' => 'btn-secondary']
             ]);
     }
 

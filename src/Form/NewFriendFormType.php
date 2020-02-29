@@ -16,16 +16,11 @@ class NewFriendFormType extends AbstractType {
             ->add('receiver', EmailType::class, [
                 'label' => false,
                 'mapped' => false,
-                'attr' => [
-                    'placeholder' => 'Email address',
-                    'class' => 'form-control my-3'
-                ]
+                'attr' => [ 'placeholder' => 'Email address' ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Send request',
-                'attr' => [
-                    'class' => 'btn btn-secondary'
-                ]
+                'attr' => [ 'class' => 'btn-secondary' ]
             ]);
     }
 

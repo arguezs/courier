@@ -20,16 +20,11 @@ class ProfileFormType extends AbstractType {
         $builder
             ->add('name', TextType::class, [
                 'required' => false,
-                'label' => false,
-                'attr' => [
-                    'placeholder' => $builder->getData()->getName(),
-                    'class' => 'form-control my-3'
-                ]
+                'label' => false
             ])
             ->add('email', EmailType::class, [
                 'label' => false,
-                'required' => false,
-                'attr' => ['class' => 'form-control my-3']
+                'required' => false
             ])
             ->add('avatar', FileType::class, [
                 'mapped' => false,
@@ -45,8 +40,7 @@ class ProfileFormType extends AbstractType {
                         'mimeTypesMessage' => 'Image must be JPG or PNG',
                         'maxSizeMessage' => 'Image must be max 512Kb'
                     ])
-                ],
-                'attr' => ['class' => 'form-control-file']
+                ]
             ])
             ->add('newPassword', RepeatedType::class, [
                 'mapped' => false,
@@ -54,17 +48,11 @@ class ProfileFormType extends AbstractType {
                 'type' => PasswordType::class,
                 'first_options' =>[
                     'label' => false,
-                    'attr' => [
-                        'placeholder' => 'New password',
-                        'class' => 'form-control my-3'
-                    ]
+                    'attr' => [ 'placeholder' => 'New password' ]
                 ],
                 'second_options' => [
                     'label' => false,
-                    'attr' => [
-                        'class' => 'form-control my-3',
-                        'placeholder' => 'Repeat new password'
-                    ]
+                    'attr' => [ 'placeholder' => 'Repeat new password' ]
                 ]
             ])
             ->add('password', PasswordType::class, [
@@ -74,7 +62,7 @@ class ProfileFormType extends AbstractType {
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Update profile',
-                'attr' => ['class' => 'btn btn-secondary']
+                'attr' => ['class' => 'btn-secondary']
             ]);
     }
 

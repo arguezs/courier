@@ -23,7 +23,6 @@ class NewMessageFormType extends AbstractType {
                 'required' => false,
                 'attr' => [
                     'placeholder' => 'For',
-                    'class' => 'form-control my-3',
                     'multiple' => true
                 ],
                 'label' => false
@@ -35,9 +34,6 @@ class NewMessageFormType extends AbstractType {
                 'group_by' => function(){return 'Friends';},
                 'choices' => $builder->getData()->getSender()->getFriends(),
                 'choice_label' => 'name',
-                'attr' => [
-                    'class' => 'form-control my-3'
-                ],
                 'label' => false,
                 'required' => false
             ])
@@ -48,38 +44,27 @@ class NewMessageFormType extends AbstractType {
                 'group_by' => function(){return 'Groups';},
                 'choices' => $builder->getData()->getSender()->getGroups(),
                 'choice_label' => 'name',
-                'attr' => [
-                    'class' => 'form-control my-3'
-                ],
                 'label' => false,
                 'required' => false
             ])
             ->add('about', TextType::class, [
                 'required' => true,
                 'label' => false,
-                'attr' => [
-                    'placeholder' => 'About',
-                    'class' => 'form-control my-3'
-                ]
+                'attr' => [ 'placeholder' => 'About' ]
             ])
             ->add('body', TextareaType::class, [
                 'required' => true,
                 'label' => false,
-                'attr' => [
-                    'placeholder' => 'Message',
-                    'class' => 'form-control my-3'
-                ]
+                'attr' => [ 'placeholder' => 'Message' ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Send message',
-                'attr' => [ 'class' => 'btn btn-secondary' ]
+                'attr' => [ 'class' => 'btn-secondary' ]
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults([
-            'data_class' => Message::class
-        ]);
+        $resolver->setDefaults([ 'data_class' => Message::class ]);
     }
 
 }

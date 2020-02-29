@@ -20,17 +20,11 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => false,
-                'attr' => [
-                    'placeholder' => 'Name',
-                    'class' => 'form-control my-3'
-                ],
+                'attr' => [ 'placeholder' => 'Name' ],
                 'required' => true,
             ])
             ->add('email', EmailType::class, [
-                'attr' => [
-                    'placeholder' => 'Email address',
-                    'class' => 'form-control my-3'
-                ],
+                'attr' => [ 'placeholder' => 'Email address' ],
                 'label' => false,
                 'required' => true
             ])
@@ -48,17 +42,11 @@ class RegistrationFormType extends AbstractType
                     ])
                 ],
                 'first_options' => [
-                    'attr' => [
-                        'placeholder' => 'Password',
-                        'class' => 'form-control my-3'
-                    ],
+                    'attr' => [ 'placeholder' => 'Password' ],
                     'label' => false
                 ],
                 'second_options' => [
-                    'attr' => [
-                        'placeholder' => 'Repeat password',
-                        'class' => 'form-control my-3'
-                    ],
+                    'attr' => [ 'placeholder' => 'Repeat password' ],
                     'label' => false
                 ]
             ])
@@ -66,8 +54,6 @@ class RegistrationFormType extends AbstractType
     }
 
     public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
+        $resolver->setDefaults([ 'data_class' => User::class ]);
     }
 }

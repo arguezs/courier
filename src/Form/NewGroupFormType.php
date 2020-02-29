@@ -15,15 +15,11 @@ class NewGroupFormType extends AbstractType {
         $builder
             ->add('name', TextType::class, [
                 'label' => false,
-                'attr' => [
-                    'placeholder' => 'Group name',
-                    'class' => 'form-control my-3',
-                    'required' => true
-                ]
+                'attr' => [ 'placeholder' => 'Group name' ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Create group',
-                'attr' => ['class' => 'btn btn-secondary']
+                'attr' => [ 'class' => 'btn-secondary' ]
             ]);
     }
 

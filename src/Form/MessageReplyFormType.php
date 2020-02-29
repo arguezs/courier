@@ -15,14 +15,11 @@ class MessageReplyFormType extends AbstractType {
         $builder
             ->add('body', TextareaType::class, [
                 'label' => false,
-                'attr' => [
-                    'class' => 'form-control my-3',
-                    'placeholder' => 'Message'
-                ]
+                'attr' => [ 'placeholder' => 'Message' ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Send reply',
-                'attr' => ['class' => 'btn btn-secondary']
+                'attr' => ['class' => 'btn-secondary']
             ]);
     }
 
