@@ -14,6 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class FriendController extends AbstractController {
 
     /**
+     * Redirects the users to their list of friends.
+     * If there is no logged user, the website is redirected to the login page.
+     *
      * @Route("/friends", name="friends")
      * @param Request $request
      * @return RedirectResponse|Response
@@ -75,7 +78,9 @@ class FriendController extends AbstractController {
     }
 
     /**
-     * @Route("/accept/{requestId}", name="accept_friendship")
+     * Takes a pending friendship request and accepts it.
+     *
+     * @Route("/friends/accept/{requestId}", name="accept_friendship")
      * @param $requestId
      * @return RedirectResponse
      */
@@ -105,7 +110,9 @@ class FriendController extends AbstractController {
     }
 
     /**
-     * @Route("/decline/{requestId}", name="decline_friendship")
+     * Takes a pending friendship request and declines it
+     *
+     * @Route("/friends/decline/{requestId}", name="decline_friendship")
      * @param $requestId
      * @return RedirectResponse
      */
@@ -133,7 +140,9 @@ class FriendController extends AbstractController {
     }
 
     /**
-     * @Route("/delete-friendship/{friendId}", name="delete_friendship")
+     * Takes an existing, non-pending frienship, and removes it
+     *
+     * @Route("/friends/delete/{friendId}", name="delete_friendship")
      * @param $friendId
      * @return RedirectResponse
      */

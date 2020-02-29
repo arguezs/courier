@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class ProfileController extends AbstractController {
 
     /**
+     * Presents and handles the form through which the User may update their account info.
+     *
      * @Route("/profile", name="profile")
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder

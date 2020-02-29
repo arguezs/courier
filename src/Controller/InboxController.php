@@ -7,6 +7,7 @@ use App\Entity\Message;
 use App\Entity\User;
 use App\Form\NewMessageFormType;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class InboxController extends AbstractController {
 
     /**
+     * Redirects the user to their list of received messages.
+     * If there is no logged user, the website is redirected to the login page.
+     *
      * @Route("/inbox/{currentPage}", name="inbox")
      * @param Request $request
      * @param int $currentPage
@@ -29,6 +33,9 @@ class InboxController extends AbstractController {
     }
 
     /**
+     * Redirects the user to their list of sent messages.
+     * If there is no logged user, the website is redirected to the login page.
+     *
      * @Route("/sent/{currentPage}", name="outbox")
      * @param Request $request
      * @param int $currentPage
@@ -41,6 +48,16 @@ class InboxController extends AbstractController {
         return $this->getInbox($request, $currentPage, true);
     }
 
+    /**
+     * Gets the paginated list of messages linked to the user.
+     *
+     * @param Request $request
+     * @param $currentPage the current page number
+     * @param bool $sent whether we´re looking for sent or received messages
+     * @param int $limit limit of messages per page
+     * @return Response
+     * @throws Exception
+     */
     public function getInbox(Request $request, $currentPage, $sent = false, $limit = 20) {
 
         $messages = $this

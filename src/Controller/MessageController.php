@@ -15,8 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class MessageController extends AbstractController {
 
     /**
+     * Gets and presents the body of a single message, provided the user has access to it.
+     *
      * @Route("/message/{messageId}", name="message")
-     * @param $messageId
+     * @param $messageId the message ID
      * @param Request $request
      * @return RedirectResponse|Response
      * @throws Exception
@@ -55,8 +57,10 @@ class MessageController extends AbstractController {
     }
 
     /**
+     * Removes a message from the user´s inbox, provided the user has access to the message.
+     *
      * @Route("/message/{messageId}/delete", name="delete_msg")
-     * @param $messageId
+     * @param $messageId the message ID.
      * @return RedirectResponse
      */
     public function deleteMessage($messageId){
@@ -86,6 +90,12 @@ class MessageController extends AbstractController {
         return $this->redirectToRoute('inbox');
     }
 
+    /**
+     * Checks that a Message exists and that it exists at least one Inbox instance relating the Message to the logged User.
+     *
+     * @param $messageId the message ID.
+     * @return Message|bool|object|null
+     */
     private function isVisible($messageId){
         $messageRepo = $this->getDoctrine()->getRepository(Message::class);
         $message = $messageRepo->find($messageId);

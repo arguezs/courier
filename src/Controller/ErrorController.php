@@ -9,6 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ErrorController extends AbstractController {
 
     /**
+     * Generates the Error page. The error shown depends on the code passed.
+     *
      * @Route("/error/{errorCode}", name="error")
      * @param $errorCode
      * @return Response
@@ -19,7 +21,7 @@ class ErrorController extends AbstractController {
                 $error = 'Unauthorized';
                 break;
             case 403:
-                $error = 'Forbbiden';
+                $error = 'Forbidden';
                 break;
             case 404:
                 $error = 'Not found';

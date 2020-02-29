@@ -16,6 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupController extends AbstractController {
 
     /**
+     * Redirect the user to their list of groups
+     * If there is no logged user, the website is redirected to the login page.
+     *
      * @Route("/groups", name="groups")
      * @param Request $request
      * @return RedirectResponse|Response
@@ -47,6 +50,10 @@ class GroupController extends AbstractController {
     }
 
     /**
+     * Redirects the user to the member list of one of their groups.
+     * If there is no logged user, the website is redirected to the login page.
+     * If the user is not the group owner, the website is redirected to the error page, with error 401.
+     *
      * @Route("/group/{groupId}", name="single_group")
      * @param Request $request
      * @param $groupId
@@ -124,6 +131,10 @@ class GroupController extends AbstractController {
     }
 
     /**
+     * Takes a group created by the user and deletes it.
+     * If there is no logged user, the website is redirected to the login page.
+     * If the user is not the group owner, the website is redirected to the error page, with error 404.
+     *
      * @Route("/groups/delete/{groupId}", name="group_delete")
      * @param $groupId
      * @return RedirectResponse
@@ -150,6 +161,10 @@ class GroupController extends AbstractController {
     }
 
     /**
+     * Takes a member from one of the user´s groups and removes it from said group.
+     * If there is no logged user, the website is redirected to the login page.
+     * If the user is not the group owner, the website is redirected to the error page, with error 404.
+     *
      * @Route("/group/{groupId}/delete/{userId}", name="member_delete")
      * @param int $groupId
      * @param int $userId
