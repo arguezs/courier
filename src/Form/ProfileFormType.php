@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ProfileFormType extends AbstractType {
 
@@ -46,6 +47,12 @@ class ProfileFormType extends AbstractType {
                 'mapped' => false,
                 'required' => false,
                 'type' => PasswordType::class,
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/',
+                        'message' => 'Password must be at least 8 characters long and contain at least a number, an lowercase letter, an uppercase letter and a symbol.'
+                    ])
+                ],
                 'first_options' =>[
                     'label' => false,
                     'attr' => [ 'placeholder' => 'New password' ]
