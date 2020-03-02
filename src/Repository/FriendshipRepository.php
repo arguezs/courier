@@ -12,39 +12,8 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method Friendship[]    findAll()
  * @method Friendship[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class FriendshipRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class FriendshipRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Friendship::class);
     }
-
-    // /**
-    //  * @return Friendship[] Returns an array of Friendship objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Friendship
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
