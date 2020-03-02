@@ -82,6 +82,9 @@ class User implements UserInterface {
      */
     private $avatar;
 
+    /**
+     * User constructor.
+     */
     public function __construct() {
         $this->sentMsg = new ArrayCollection();
         $this->receivedMsg = new ArrayCollection();
@@ -91,14 +94,30 @@ class User implements UserInterface {
         $this->receivedFriendships = new ArrayCollection();
     }
 
+    /**
+     * Gets the ID of the User
+     *
+     * @return int|null
+     */
     public function getId(): ?int {
         return $this->id;
     }
 
+    /**
+     * Returns the email address of the User
+     *
+     * @return string|null
+     */
     public function getEmail(): ?string {
         return $this->email;
     }
 
+    /**
+     * Updates the email adress of the User
+     *
+     * @param string $email
+     * @return $this
+     */
     public function setEmail(string $email): self {
         $this->email = $email;
 
@@ -132,12 +151,21 @@ class User implements UserInterface {
     }
 
     /**
+     * Gets the User's password
+     *
+     * @return string
      * @see UserInterface
      */
     public function getPassword(): string {
         return (string) $this->password;
     }
 
+    /**
+     * Updates the User's password
+     *
+     * @param string $password
+     * @return $this
+     */
     public function setPassword(string $password): self {
         $this->password = $password;
 
@@ -160,12 +188,20 @@ class User implements UserInterface {
     }
 
     /**
+     * Returns the list of Messages sent by the User.
+     *
      * @return Collection|Message[]
      */
     public function getSentMsg(): Collection {
         return $this->sentMsg;
     }
 
+    /**
+     * Adds a Message to the list of Messages sent by the User
+     *
+     * @param Message $sentMsg
+     * @return $this
+     */
     public function addSentMsg(Message $sentMsg): self {
         if (!$this->sentMsg->contains($sentMsg)) {
             $this->sentMsg[] = $sentMsg;
@@ -175,6 +211,12 @@ class User implements UserInterface {
         return $this;
     }
 
+    /**
+     * Removes a Message from the list of Messages sent by the User
+     *
+     * @param Message $sentMsg
+     * @return $this
+     */
     public function removeSentMsg(Message $sentMsg): self {
         if ($this->sentMsg->contains($sentMsg)) {
             $this->sentMsg->removeElement($sentMsg);
@@ -372,7 +414,7 @@ class User implements UserInterface {
         return $this->avatar;
     }
 
-    public function setAvatar(?string $avatar = 'generic.jpg'): self {
+    public function setAvatar(?string $avatar): self {
         $this->avatar = $avatar;
 
         return $this;

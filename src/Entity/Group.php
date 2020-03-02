@@ -58,50 +58,77 @@ class Group {
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->user = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
+    /**
+     * Gets the ID of the Group
+     *
+     * @return int|null
+     */
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
+    /**
+     * Gets the name of the Group
+     *
+     * @return string|null
+     */
+    public function getName(): ?string {
         return $this->name;
     }
 
-    public function setName(string $name): self
-    {
+    /**
+     * Updates the name of the Group
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function setName(string $name): self {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getOwner(): ?User
-    {
+    /**
+     * Gets the User who created the Group
+     *
+     * @return User|null
+     */
+    public function getOwner(): ?User {
         return $this->owner;
     }
 
-    public function setOwner(?User $owner): self
-    {
+    /**
+     * Sets the owner of the Group upon creation
+     *
+     * @param User|null $owner
+     * @return $this
+     */
+    public function setOwner(?User $owner): self {
         $this->owner = $owner;
 
         return $this;
     }
 
     /**
+     * Gets the list of Users that are members of the Group
+     *
      * @return Collection|User[]
      */
-    public function getUser(): Collection
-    {
+    public function getUser(): Collection {
         return $this->user;
     }
 
-    public function addUser(User $user): self
-    {
+    /**
+     * Adds a User to the list of members of the Group
+     *
+     * @param User $user
+     * @return $this
+     */
+    public function addUser(User $user): self {
         if (!$this->user->contains($user)) {
             $this->user[] = $user;
         }
@@ -109,8 +136,13 @@ class Group {
         return $this;
     }
 
-    public function removeUser(User $user): self
-    {
+    /**
+     * Removes a User from the list of members of the Group
+     *
+     * @param User $user
+     * @return $this
+     */
+    public function removeUser(User $user): self {
         if ($this->user->contains($user)) {
             $this->user->removeElement($user);
         }

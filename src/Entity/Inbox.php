@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InboxRepository")
  */
-class Inbox
-{
+class Inbox {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -38,37 +38,49 @@ class Inbox
      */
     private $is_read;
 
-    public function getId(): ?int
-    {
+    /**
+     * Gets the ID of the Inbox
+     * @return int|null
+     */
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getUser(): ?User
-    {
+    /**
+     * Gets the User the Inbox belongs to
+     *
+     * @return User|null
+     */
+    public function getUser(): ?User {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
-    {
+    /**
+     * Sets the User the Inbox belongs to
+     *
+     * @param User|null $user
+     * @return $this
+     */
+    public function setUser(?User $user): self {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getMessage(): ?Message
-    {
+    /**
+     * @return Message|null
+     */
+    public function getMessage(): ?Message {
         return $this->message;
     }
 
-    public function setMessage(?Message $message): self
-    {
+    public function setMessage(?Message $message): self {
         $this->message = $message;
 
         return $this;
     }
 
-    public function getInOut(): ?bool
-    {
+    public function getInOut(): ?bool {
         return $this->in_out;
     }
 
