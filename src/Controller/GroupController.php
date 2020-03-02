@@ -59,7 +59,7 @@ class GroupController extends AbstractController {
      * @param $groupId
      * @return RedirectResponse|Response
      */
-    public function singleGroup(Request $request, $groupId){
+    public function singleGroup(Request $request, $groupId = 0){
         if (!$this->getUser())
             return $this->redirectToRoute('sign_in');
 

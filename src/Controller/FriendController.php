@@ -84,7 +84,7 @@ class FriendController extends AbstractController {
      * @param $requestId
      * @return RedirectResponse
      */
-    public function acceptFriendship($requestId) {
+    public function acceptFriendship($requestId = 0) {
         if (!$this->getUser())
             return $this->redirectToRoute('sign_in');
 
@@ -116,7 +116,7 @@ class FriendController extends AbstractController {
      * @param $requestId
      * @return RedirectResponse
      */
-    public function declineFriendship($requestId) {
+    public function declineFriendship($requestId = 0) {
         if (!$this->getUser())
             return $this->redirectToRoute('sign_in');
 
@@ -146,7 +146,7 @@ class FriendController extends AbstractController {
      * @param $friendId
      * @return RedirectResponse
      */
-    public function deleteFriendship($friendId) {
+    public function deleteFriendship($friendId = 0) {
         if (!$this->getUser())
             return $this->redirectToRoute('sign_in');
 

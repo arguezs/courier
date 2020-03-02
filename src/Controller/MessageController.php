@@ -23,7 +23,7 @@ class MessageController extends AbstractController {
      * @return RedirectResponse|Response
      * @throws Exception
      */
-    public function message($messageId, Request $request){
+    public function message($messageId = 0, Request $request){
         if (!$this->getUser())
             return $this->redirectToRoute('home');
 
@@ -63,7 +63,7 @@ class MessageController extends AbstractController {
      * @param $messageId the message ID.
      * @return RedirectResponse
      */
-    public function deleteMessage($messageId){
+    public function deleteMessage($messageId = 0){
         if (!$this->getUser())
             return $this->redirectToRoute('sign_in');
 

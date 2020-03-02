@@ -15,7 +15,7 @@ class ErrorController extends AbstractController {
      * @param $errorCode
      * @return Response
      */
-    public function error($errorCode){
+    public function error($errorCode = 0){
         switch ($errorCode) {
             case 401:
                 $error = 'Unauthorized';
