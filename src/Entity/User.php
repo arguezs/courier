@@ -113,18 +113,6 @@ class User implements UserInterface {
     }
 
     /**
-     * Updates the email adress of the User
-     *
-     * @param string $email
-     * @return $this
-     */
-    public function setEmail(string $email): self {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -194,27 +182,6 @@ class User implements UserInterface {
         return $this->groups;
     }
 
-    public function addGroup(Group $group): self {
-        if (!$this->groups->contains($group)) {
-            $this->groups[] = $group;
-            $group->setOwner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGroup(Group $group): self {
-        if ($this->groups->contains($group)) {
-            $this->groups->removeElement($group);
-            // set the owning side to null (unless already changed)
-            if ($group->getOwner() === $this) {
-                $group->setOwner(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
      * @return Collection|Inbox[]
      */
@@ -222,53 +189,11 @@ class User implements UserInterface {
         return $this->inboxes;
     }
 
-    public function addInbox(Inbox $inbox): self {
-        if (!$this->inboxes->contains($inbox)) {
-            $this->inboxes[] = $inbox;
-            $inbox->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInbox(Inbox $inbox): self {
-        if ($this->inboxes->contains($inbox)) {
-            $this->inboxes->removeElement($inbox);
-            // set the owning side to null (unless already changed)
-            if ($inbox->getUser() === $this) {
-                $inbox->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
      * @return Collection|Friendship[]
      */
     public function getFriendships(): Collection {
         return $this->friendships;
-    }
-
-    public function addFriendship(Friendship $friendship): self {
-        if (!$this->friendships->contains($friendship)) {
-            $this->friendships[] = $friendship;
-            $friendship->setSender($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFriendship(Friendship $friendship): self {
-        if ($this->friendships->contains($friendship)) {
-            $this->friendships->removeElement($friendship);
-            // set the owning side to null (unless already changed)
-            if ($friendship->getSender() === $this) {
-                $friendship->setSender(null);
-            }
-        }
-
-        return $this;
     }
 
     /**
