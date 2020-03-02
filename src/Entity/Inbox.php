@@ -68,17 +68,30 @@ class Inbox {
     }
 
     /**
+     * Gets the Message asociated with the Inbox
+     *
      * @return Message|null
      */
     public function getMessage(): ?Message {
         return $this->message;
     }
 
-    public function getIsRead(): ?bool
+    /**
+     * Gets whether the Inbox is read or not
+     *
+     * @return bool|null
+     */
+    public function isRead(): ?bool
     {
         return $this->is_read;
     }
 
+    /**
+     * Updates the read status of the Inbox.
+     *
+     * @param bool $is_read
+     * @return $this
+     */
     public function setIsRead(bool $is_read): self
     {
         $this->is_read = $is_read;

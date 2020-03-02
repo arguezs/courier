@@ -113,7 +113,7 @@ class MessageController extends AbstractController {
             return false;
 
         foreach ($inbox as $row){
-            if (!$row->getIsRead()) {
+            if (!$row->isRead()) {
                 $row->setIsRead(true);
                 $this->getDoctrine()->getManager()->persist($row);
                 $this->getDoctrine()->getManager()->flush();

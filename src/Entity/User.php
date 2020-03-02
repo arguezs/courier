@@ -203,16 +203,32 @@ class User implements UserInterface {
         return $this->receivedFriendships;
     }
 
+    /**
+     * Gets the name of the User
+     *
+     * @return string|null
+     */
     public function getName(): ?string {
         return $this->name;
     }
 
+    /**
+     * Updates the name of the User
+     *
+     * @param string $name
+     * @return $this
+     */
     public function setName(string $name): self {
         $this->name = $name;
 
         return $this;
     }
 
+    /**
+     * Gets the User's friends
+     *
+     * @return ArrayCollection
+     */
     public function getFriends() {
         $friends = new ArrayCollection();
 
@@ -227,6 +243,11 @@ class User implements UserInterface {
          return $friends;
     }
 
+    /**
+     * Gets the pending Friendship requests received by the User
+     *
+     * @return ArrayCollection
+     */
     public function getFriendRequests() {
         $requests = new ArrayCollection();
 
@@ -237,10 +258,21 @@ class User implements UserInterface {
         return $requests;
     }
 
+    /**
+     * Gets the User's avatar
+     *
+     * @return string|null
+     */
     public function getAvatar(): ?string {
         return $this->avatar;
     }
 
+    /**
+     * Updates the User's avatar
+     *
+     * @param string|null $avatar
+     * @return $this
+     */
     public function setAvatar(?string $avatar): self {
         $this->avatar = $avatar;
 
