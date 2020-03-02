@@ -188,83 +188,6 @@ class User implements UserInterface {
     }
 
     /**
-     * Returns the list of Messages sent by the User.
-     *
-     * @return Collection|Message[]
-     */
-    public function getSentMsg(): Collection {
-        return $this->sentMsg;
-    }
-
-    /**
-     * Adds a Message to the list of Messages sent by the User
-     *
-     * @param Message $sentMsg
-     * @return $this
-     */
-    public function addSentMsg(Message $sentMsg): self {
-        if (!$this->sentMsg->contains($sentMsg)) {
-            $this->sentMsg[] = $sentMsg;
-            $sentMsg->setSender($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Removes a Message from the list of Messages sent by the User
-     *
-     * @param Message $sentMsg
-     * @return $this
-     */
-    public function removeSentMsg(Message $sentMsg): self {
-        if ($this->sentMsg->contains($sentMsg)) {
-            $this->sentMsg->removeElement($sentMsg);
-            // set the owning side to null (unless already changed)
-            if ($sentMsg->getSender() === $this) {
-                $sentMsg->setSender(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Message[]
-     */
-    public function getReceivedMsg(): Collection {
-        return $this->receivedMsg;
-    }
-
-    public function addReceivedMsg(Message $receivedMsg): self {
-        if (!$this->receivedMsg->contains($receivedMsg)) {
-            $this->receivedMsg[] = $receivedMsg;
-            $receivedMsg->addReceiver($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReceivedMsg(Message $receivedMsg): self {
-        if ($this->receivedMsg->contains($receivedMsg)) {
-            $this->receivedMsg->removeElement($receivedMsg);
-            $receivedMsg->removeReceiver($this);
-        }
-
-        return $this;
-    }
-
-    public function getRecovery(): ?string {
-        return $this->recovery;
-    }
-
-    public function setRecovery(?string $recovery): self {
-        $this->recovery = $recovery;
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Group[]
      */
     public function getGroups(): Collection {
@@ -353,27 +276,6 @@ class User implements UserInterface {
      */
     public function getReceivedFriendships(): Collection {
         return $this->receivedFriendships;
-    }
-
-    public function addReceivedFriendship(Friendship $receivedFriendship): self {
-        if (!$this->receivedFriendships->contains($receivedFriendship)) {
-            $this->receivedFriendships[] = $receivedFriendship;
-            $receivedFriendship->setReceiver($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReceivedFriendship(Friendship $receivedFriendship): self {
-        if ($this->receivedFriendships->contains($receivedFriendship)) {
-            $this->receivedFriendships->removeElement($receivedFriendship);
-            // set the owning side to null (unless already changed)
-            if ($receivedFriendship->getReceiver() === $this) {
-                $receivedFriendship->setReceiver(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getName(): ?string {

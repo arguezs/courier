@@ -74,23 +74,6 @@ class Inbox {
         return $this->message;
     }
 
-    public function setMessage(?Message $message): self {
-        $this->message = $message;
-
-        return $this;
-    }
-
-    public function getInOut(): ?bool {
-        return $this->in_out;
-    }
-
-    public function setInOut(bool $in_out): self
-    {
-        $this->in_out = $in_out;
-
-        return $this;
-    }
-
     public function getIsRead(): ?bool
     {
         return $this->is_read;
